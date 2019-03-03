@@ -6,9 +6,9 @@
  */
 import React from 'react';
 import { StyleSheet, TextInput,KeyboardAvoidingView, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar,Keyboard,Animated,ScrollView } from 'react-native';
-
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class Registration extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
@@ -136,10 +136,7 @@ class Registration extends React.Component {
                        onPress={() => Actions.pop()}
                        title=""
                      >
-                                       <Image
 
-                                              source={require('../../assets/back.png')}
-                                       />
                          </TouchableOpacity>
                            </View>
                            <View style={{width:'55%',  paddingTop: 5,justifyContent:'center',alignItems:'center'}} >
@@ -152,10 +149,7 @@ class Registration extends React.Component {
                            onPress={() => this.clickToRegistration()}
                            title=""
                          >
-                         <Image
 
-                                source={require('../../assets/done-btn.png')}
-                         />
                              </TouchableOpacity>
                                </View>
 
@@ -177,155 +171,171 @@ class Registration extends React.Component {
 
 
             return (
-                    <View style={styles.MainContainer}>
-                        <ImageBackground
-                          style={styles.imgBackground}
-                          resizeMode='cover'
-                          source={require('../../assets/background-img.png')}>
-                           {
-                                                  (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
-                             }
-
-                             <View style={{width:'100%'}}>
-                             {this.  headerView()}
-                             </View>
+              <View style={styles.container}>
 
 
 
-                           <ScrollView>
-                           <View style={{ width:'100%'}}>
-                          <View style={{marginTop:25,marginBottom:30,marginLeft:15,marginRight:15}}>
-                          {/****************************************************************************/}
-                          <View style={{backgroundColor:'#fff',marginBottom:25,borderRadius:15}}>
-                          <View style={{backgroundColor:'#1A44F2',padding:10,borderTopRadius:5,borderTopLeftRadius: 5, borderTopRightRadius: 5,flexDirection:'row'}}>
-                        <View style={{paddingTop:5}}>
-                              <Image source={require('../../assets/personalInfo-icon.png')} />
-                        </View>
-                            <View><Text style={styles.textTittle}>PERSONAL INFORMATION</Text></View>
-                          </View>
-                          <View style={styles.mainRow}>
+                                      <ImageBackground
+                                          style={styles.imgBackground}
+                                          resizeMode='cover'
+                                          source={require('../../assets/background.jpg')}>
+                                          <View style={styles.container}>
+                                              <Image
+                                                  source={require('../../assets/logo.jpg')}
+                                                  style={{marginBottom: 30, marginTop: 50,height:73,width:159}}/>
+                                                  <KeyboardAwareScrollView>
+                                              <View style={{width:320}}>
+                                              <View style={{width:'100%',backgroundColor:'#FFFFFF10',height:40,marginTop:5,marginBottom:10}}>
 
-                                  <TextInput
-                                      style={styles.textArea}
-                                      underlineColorAndroid="transparent"
-                                      placeholderTextColor="grey"
-                                      placeholder=" First Name"
-                                      numberOfLines={1}
-                                      returnKeyType="done"
-                                      onKeyPress={this.handleKeyDown}
-                                      value={this.state.txtName}
-                                      onChangeText={txtName => this.setState({txtName:txtName})}
-                                     />
+                                                            <Text  style={{ textAlign:'left',color:'#000',fontSize:18,margin:8}}
+                                                                  >
+                                                                  Personal Infromation
+                                                                  </Text>
+                                                  </View>
+                                              <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
-
-                        </View>
-
-                        <View style={styles.mainRow}>
-
-                                <TextInput
-                                    style={styles.textArea}
-                                    underlineColorAndroid="transparent"
-                                    placeholderTextColor="grey"
-                                    placeholder=" Last Name"
-                                    numberOfLines={1}
-                                    returnKeyType="done"
-                                    onKeyPress={this.handleKeyDown}
-                                    onChangeText={txtLast => this.setState({txtLast:txtLast})}
-                               />
+                                              <View style={styles.SectionStyle1}>
+                                                  <TextInput
+                                                      style={{flex: 1, width: 100, fontSize:16}}
+                                                      placeholder="First Name"
+                                                      placeholderTextColor="#fff"
+                                                      underlineColorAndroid="transparent"
+                                                      onChangeText={txtFName => this.setState({txtFName})}
+                                                      />
+                                              </View>
+                                              </View>
+                                              <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
 
-                      </View>
-
-                      <View style={styles.mainRowLast}>
-
-                              <TextInput
-                                  style={styles.textArea}
-                                  underlineColorAndroid="transparent"
-                                  placeholderTextColor="grey"
-                                  placeholder=" Company Name"
-                                  numberOfLines={1}
-                                  returnKeyType="done"
-                                  onKeyPress={this.handleKeyDown}
-                                  onChangeText={txtCompany => this.setState({txtCompany:txtCompany})}
-                                 />
-
-                    </View>
-                    </View>
-
-                    {/****************************************************************************/}
-                      <View style={{backgroundColor:'#fff',borderRadius:15,shadowColor:'gray',shadowOpacity:0.8}}>
-                    <View style={{backgroundColor:'#1A44F2',padding:10,borderTopRadius:5,borderTopLeftRadius: 5, borderTopRightRadius: 5,flexDirection:'row'}}>
-                    <View style={{paddingTop:5}}>
-                          <Image source={require('../../assets/loginInfo-icon.png')} />
-                    </View>
-                      <View><Text style={styles.textTittle}>LOG IN INFORMATION</Text></View>
-                    </View>
-
-                    <View style={styles.mainRow}>
-
-                            <TextInput
-                                style={styles.textArea}
-                                underlineColorAndroid="transparent"
-                                placeholderTextColor="grey"
-                                placeholder="Email ID"
-                                numberOfLines={1}
-                                returnKeyType="done"
-                                onKeyPress={this.handleKeyDown}
-                                onChangeText={txtEmail => this.setState({txtEmail:txtEmail})}
-                           />
+                                              <View style={styles.SectionStyle2}>
+                                                  <TextInput
+                                                      style={{flex: 1, width: 100, fontSize:16}}
+                                                      placeholder="Last Name"
+                                                      placeholderTextColor="#fff"
+                                                      underlineColorAndroid="transparent"
+                                                      onChangeText={txtLName => this.setState({txtLName})}
+                                                      />
+                                              </View>
+                                              </View>
+                                              <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
 
-                  </View>
+                                              <View style={styles.SectionStyle2}>
+                                                  <TextInput
+                                                      style={{flex: 1, width: 100, fontSize:16}}
+                                                      placeholder="Age"
+                                                      placeholderTextColor="#fff"
+                                                      underlineColorAndroid="transparent"
+                                                      onChangeText={txtAge => this.setState({txtAge})}
+                                                      />
+                                              </View>
+                                              </View>
+                                              <View style={{width:'100%',backgroundColor:'#FFFFFF10',height:40,marginTop:5,marginBottom:10}}>
+
+                                                            <Text  style={{ textAlign:'left',color:'#000',fontSize:18,margin:8}}
+                                                                  >
+                                                                  Contact Infromation
+                                                                  </Text>
+                                                  </View>
+                                                  <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
 
-                  <View style={styles.mainRow}>
-
-                          <TextInput
-                              style={styles.textArea}
-                              underlineColorAndroid="transparent"
-                              placeholderTextColor="grey"
-                              placeholder="Enter Password (at least 6 characters)"
-                              numberOfLines={1}
-                              returnKeyType="done"
-                              onKeyPress={this.handleKeyDown}
-                              onChangeText={txtPassword => this.setState({txtPassword:txtPassword})}
-                             />
-
-
-                </View>
+                                                  <View style={styles.SectionStyle2}>
+                                                      <TextInput
+                                                          style={{flex: 1, width: 100, fontSize:16}}
+                                                          placeholder="Mobile"
+                                                          placeholderTextColor="#fff"
+                                                          underlineColorAndroid="transparent"
+                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          />
+                                                  </View>
+                                                  </View>
+                                                  <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
 
-                <View style={styles.mainRowLast}>
+                                                  <View style={styles.SectionStyle2}>
+                                                      <TextInput
+                                                          style={{flex: 1, width: 100, fontSize:16}}
+                                                          placeholder="Email Id"
+                                                          placeholderTextColor="#fff"
+                                                          underlineColorAndroid="transparent"
+                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          />
+                                                  </View>
+                                                  </View>
+                                                  <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
 
-                        <TextInput
-                            style={styles.textArea}
-                            underlineColorAndroid="transparent"
-                            placeholderTextColor="grey"
-                            placeholder="Confirm Password"
-                            numberOfLines={1}
-                            returnKeyType="done"
-                            onKeyPress={this.handleKeyDown}
-                            onChangeText={txtConifPassword => this.setState({txtConifPassword:txtConifPassword})}
-                           />
+                                                  <View style={styles.SectionStyle2}>
+                                                      <TextInput
+                                                          style={{flex: 1, width: 100, fontSize:16}}
+                                                          placeholder="Password"
+                                                          placeholderTextColor="#fff"
+                                                          underlineColorAndroid="transparent"
+                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          />
+                                                  </View>
+                                                  </View>
+                                                  <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
+
+
+                                                  <View style={styles.SectionStyle2}>
+                                                      <TextInput
+                                                          style={{flex: 1, width: 100, fontSize:16}}
+                                                          placeholder="Confirm Password"
+                                                          placeholderTextColor="#fff"
+                                                          underlineColorAndroid="transparent"
+                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          />
+                                                  </View>
+                                                  </View>
+
+                                          {
+                                            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
+                                          }
+
+                                          <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
+                                          <TouchableOpacity
+                                            onPress={this.clickToLogin}
+                                          >
+                                          <Image
+                                                   source={require('../../assets/signIn.png')}
+                                                   style={{width:320,height:45,marginTop:10}}
+                                                   />
+                                            </TouchableOpacity>
+                                            </View>
+
+                                          <View style={{width:'100%',flexDirection:'row',marginTop:20,justifyContent:'center',alignItems:'center'}}>
+
+                                            <TouchableOpacity
+                                                  onPress={this.clickToRegistration}
+                                                  >
+
+
+                                                        <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:16}}
+                                                              >
+                                                              Already Have an Account? Sign In
+                                                              </Text>
+
+
+
+                                              </TouchableOpacity>
+
+
+
+                                          </View>
+
+                                          </View>
+                                          </KeyboardAwareScrollView>
+                                      </View>
+                                  </ImageBackground>
+
+
+
 
               </View>
 
-
-  </View>
-                      </View>
-                      <View style={{width:'100%'}}>
-                         <Text style={styles.textBottom}>After completing we will send you an email to the account you entered above so you can activate it.</Text>
-                         </View>
-                      </View>
-                    </ScrollView>
-
-
-                    </ImageBackground>
-
-                    </View>
-
-                                                      );
+                      );
                                                     }
     }
 
@@ -363,20 +373,20 @@ const styles = StyleSheet.create({
             borderRadius:3,
             justifyContent: "flex-start",
             paddingLeft:10,
-            fontFamily:'GOTHMBOL', fontSize:16,
+             fontSize:16,
             width: '100%', backgroundColor: '#ffffff', color:'#000'
     },
     textSub: {
         color: '#000',
         fontSize: 16,
         paddingTop:10,
-        fontFamily:'GOTHMBOL',
+
         },
 
         textTittle: {
             color: '#fff',
             fontSize: 18,
-            fontFamily:'GOTHMBOL',
+
             textAlign:'left',
             backgroundColor:'#1A44F2',
             padding:10,
@@ -386,7 +396,7 @@ const styles = StyleSheet.create({
             textBottom: {
                 color: '#fff',
                 fontSize: 16,
-                fontFamily:'GOTHMBOL',
+
                 textAlign:'left',
                 backgroundColor:'#1A44F2',
                 padding:10,
@@ -522,19 +532,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-
-        borderColor: '#000',
-        backgroundColor: '#fff',
+        width:'80%',
         height: 40,
-        borderRadius: 5,
-        margin: 10,
-        width: 267,
+
+
+
+
     },
     SectionStyle2: {
-        borderWidth: .5,
-        marginRight: 30,
-        width: 90,
-        height: 90
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width:'80%',
+      height: 40,
+      marginTop:5
+
     },
     textInput:
             {
