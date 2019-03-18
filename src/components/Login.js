@@ -251,6 +251,7 @@ class Login extends React.Component {
                                                         onPress={this.clickToRegistration}
                                                         >
 
+<<<<<<< HEAD
 
                                                               <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
                                                                     >
@@ -259,6 +260,16 @@ class Login extends React.Component {
 
 
 
+=======
+
+                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
+                                                                    >
+                                                                    Watch Training Video
+                                                                    </Text>
+
+
+
+>>>>>>> f309b331bc7f5a6754542132e6e774a787af31ff
                                                     </TouchableOpacity>
                                                     </View>
                                                 </View>
@@ -266,7 +277,11 @@ class Login extends React.Component {
                                         </ImageBackground>
                     }
 
+<<<<<<< HEAD
 
+=======
+                  
+>>>>>>> f309b331bc7f5a6754542132e6e774a787af31ff
 
                     </View>
                                                       );
