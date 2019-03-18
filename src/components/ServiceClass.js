@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, NetInfo, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import axios from 'axios';
 //const baseUrl = 'https://camstruction.com/api/';
-const baseUrl = 'http://camstructionupdated.azurewebsites.net/api/';
+const baseUrl = 'http://13.233.61.172/api/';
 //http://camstructionupdated.azurewebsites.net/api/photo
 export default class ServiceClass extends React.Component {
     state = {
@@ -32,6 +32,14 @@ export default class ServiceClass extends React.Component {
             password: password
         });
     }
+
+    static languageData = (lastUrl) => {
+
+          return axios.get(baseUrl + lastUrl, {
+
+          });
+      }
+
 
     static signUp = (firstName, lastName,companyName,email,password, confirmPassword,lastUrl) => {
 

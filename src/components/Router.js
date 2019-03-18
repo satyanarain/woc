@@ -5,6 +5,7 @@ import Login from './Login';
 import { DrawerNavigator } from 'react-navigation';
 import Registration from './Registration';
 import UserData from './UserData';
+import LandingScreen from './LandingScreen';
 
 import { Alert, StatusBar } from 'react-native';
 
@@ -46,12 +47,11 @@ class RouterComponent extends Component {
 
       return (
       <Router>
-   <Scene key='root' >
-     <Scene hideNavBar>
-
+      <Scene key='root' >
+      <Scene hideNavBar>
        <Scene key='Login' component={Login} title=''  />
+       <Scene key='LandingScreen' component={LandingScreen} title='' initial />
        <Scene key='Registration' component={Registration} title='' />
-
         <Scene key='RouterComponent' component={RouterComponent} title='' />
 
 

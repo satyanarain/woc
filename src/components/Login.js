@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import { StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
-import { Crashlytics } from 'react-native-fabric';
 import ResponsiveImage from 'react-native-responsive-image';
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
@@ -51,11 +50,11 @@ class Login extends React.Component {
 
             that.HideSplashScreen();
 
-        }, 3000);
+        }, 1000);
 
         setTimeout(() => {
             this.setState({Login: true});
-        }, 2000);
+        }, 1000);
     }
     HideSplashScreen = () => {
 
@@ -141,7 +140,7 @@ class Login extends React.Component {
 
         let Splash_Screen = (
                 <View style={styles.SplashScreen_RootView}>
-                    <Image source={require('../../assets/splash.png')}
+                    <Image source={require('../../assets/background.jpg')}
                            style={{height:'100%',width:'100%',flex:1}}
                              resizeMode='cover' />
 
@@ -152,84 +151,122 @@ class Login extends React.Component {
                     <View style={styles.container}>
 
                         {
-                            Login &&
+                            
                                             <ImageBackground
                                                 style={styles.imgBackground}
                                                 resizeMode='cover'
-                                                source={require('../../assets/background-img.png')}>
+                                                source={require('../../assets/background.jpg')}>
                                                 <View style={styles.container}>
                                                     <ResponsiveImage
-                                                        source={require('../../assets/logo.png')}
-                                                        style={{marginBottom: 30, marginTop: 70,height:120,width:120}}/>
-                                                    <View style={{backgroundColor:'#fff',borderBottomWidth:5,borderTopWidth:5,borderRadius:5,borderColor:'#1A44F2',width:300}}>
+                                                        source={require('../../assets/logo.jpg')}
+                                                        style={{marginBottom: 30, marginTop: 210,height:73,width:159}}/>
+                                                    <View style={{width:320}}>
+                                                    <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
+
+                                                    <View style={{width:'12%',padding:12}}>
+                                                    <ResponsiveImage
+                                                        source={require('../../assets/email-icon.png')}
+                                                        style={{height:13,width:18}}/>
+                                                    </View>
                                                     <View style={styles.SectionStyle1}>
                                                         <TextInput
-                                                            style={{flex: 1, width: 100, fontFamily:'GOTHMBOL', fontSize:16}}
-                                                            placeholder="Email"
-                                                            placeholderTextColor="#000"
+                                                            style={{flex: 1, width: 100, fontSize:16}}
+                                                            placeholder="Email Id"
+                                                            placeholderTextColor="#fff"
                                                             underlineColorAndroid="transparent"
                                                             onChangeText={txtEmail => this.setState({txtEmail})}
                                                             />
                                                     </View>
+                                                    </View>
+                                                    <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
+
+                                                    <View style={{width:'12%',padding:12}}>
+                                                    <ResponsiveImage
+                                                        source={require('../../assets/password-icon.png')}
+                                                        style={{height:21,width:17}}/>
+                                                    </View>
                                                     <View style={styles.SectionStyle2}>
-                                                    <TextInput
-                                                        style={{flex: 1, width: 100, fontFamily:'GOTHMBOL', fontSize:16}}
-                                                        placeholder="Password"
-                                                        placeholderTextColor="#000"
-                                                        underlineColorAndroid="transparent"
-                                                        secureTextEntry={true}
-                                                        onChangeText={password => this.setState({password})}
-                                                        />
-                                                </View>
+                                                        <TextInput
+                                                            style={{flex: 1, width: 100, fontSize:16}}
+                                                            placeholder="Password"
+                                                            placeholderTextColor="#fff"
+                                                            underlineColorAndroid="transparent"
+                                                            onChangeText={password => this.setState({password})}
+                                                            />
+                                                    </View>
+                                                    </View>
+
+
 
                                                 {
                                                   (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
                                                 }
 
-
+                                                <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
                                                 <TouchableOpacity
-                                                    onPress={this.clickToLogin}
-                                                    >
+                                                  onPress={this.clickToLogin}
+                                                >
+                                                <Image
+                                                         source={require('../../assets/signIn.png')}
+                                                         style={{width:320,marginTop:10}}
+                                                         />
+                                                  </TouchableOpacity>
+                                                  </View>
 
-                                                    <View style={{flexDirection:'row',backgroundColor:'#1A44F2',margin:15,marginLeft:30,marginRight:30,justifyContent:'center',alignItems:'center',borderRadius:5}}>
-                                                    <View style={{}}>
-                                                          <Image source={require('../../assets/loginInfo-icon.png')} />
-                                                    </View>
-                                                    <View style={{justifyContent:'center',alignItems:'center'}}>
-                                                                <Text
-                                                                    style={{ textAlign:'center',color:'#fff',height:40,borderRadius:5,paddingLeft:10,paddingTop:10,fontWeight:'bold',fontSize:16}}
+                                                <View style={{width:'100%',flexDirection:'row',marginTop:20}}>
+                                                  <View style={{width:'50%'}}>
+                                                  <TouchableOpacity
+                                                        onPress={this.clickToRegistration}
+                                                        >
+
+
+                                                              <Text  style={{ textAlign:'left',color:'#fff',fontWeight:'bold',fontSize:16}}
                                                                     >
-                                                                    Login
+                                                                    Forgot Password?
                                                                     </Text>
-                                                        </View>
-                                                        </View>
-                                                </TouchableOpacity>
 
+
+
+                                                    </TouchableOpacity>
+                                                    </View>
+                                                  <View style={{width:'50%'}}>
+                                                  <TouchableOpacity
+                                                        onPress={this.clickToRegistration}
+                                                        >
+
+
+                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18, textDecorationLine: 'underline'}}
+                                                                    >
+                                                                    Sign Up
+                                                                    </Text>
+
+
+
+                                                    </TouchableOpacity>
+                                                    </View>
+
+                                                </View>
+                                                <View style={{width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
                                                 <TouchableOpacity
-                                                    onPress={this.clickToRegistration}
-                                                    >
+                                                        onPress={this.clickToRegistration}
+                                                        >
 
-                                                        <View style={{padding:20,paddingTop:0}}>
-                                                            <Text  style={{ textAlign:'center',color:'#1A44F2',fontWeight:'bold',fontSize:16}}
-                                                                >
-                                                                Register a new account
-                                                                </Text>
 
-                                                            </View>
+                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
+                                                                    >
+                                                                    Watch Training Video
+                                                                    </Text>
 
-                                                </TouchableOpacity>
+
+
+                                                    </TouchableOpacity>
+                                                    </View>
                                                 </View>
                                             </View>
                                         </ImageBackground>
                     }
 
-                    {
-                                                                        (this.state.isVisible === true) ? Splash_Screen : null
-                    }
-                    <StatusBar
 
-                        barStyle="light-content"
-                        />
 
                     </View>
                                                       );
@@ -344,29 +381,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        width:'80%',
         height: 40,
-        borderRadius: 5,
-        marginTop: 15,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        borderColor:'#697df3',
-        borderBottomWidth:1,
+
+
+
+
     },
     SectionStyle2: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#fff',
+      width:'80%',
       height: 40,
-      borderRadius: 5,
-      marginTop: 5,
-      marginBottom: 10,
-      marginLeft: 10,
-      marginRight: 10,
-      borderColor:'#697df3',
-      borderBottomWidth:1,
+      marginTop:5
+
     },
     textInput:
             {
