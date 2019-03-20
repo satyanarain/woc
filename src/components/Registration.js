@@ -19,7 +19,13 @@ class Registration extends React.Component {
 
         this.state = {
             loaded: false,
+            txtFName:'',
+            txtLName:'',
             txtEmail: '',
+            txtPassword: '',
+            txtMobile: '',
+            txtAge: '',
+            txtConifPassword: '',
             token: "",
             tokenCopyFeedback: "",
             isVisible: true,
@@ -89,18 +95,24 @@ class Registration extends React.Component {
                   clickToRegistration = () =>{
                       var isValid    = this.validate(this.state.txtEmail);
                     //  alert(this.state.txtPassword.length);
-                    if (this.state.txtName === undefined) {
-                      alert('Please enter the Name.');
+
+
+
+
+                    if (this.state.txtFName === '') {
+                      alert('Please enter the First Name.');
+                    } else if (this.state.txtLName === '') {
+                      alert('Please enter the Last Name.');
                     } else if (this.state.txtEmail === '') {
                         alert('Please enter the Email ID.');
                     }     else if (isValid === false) {
                         alert('You have entered an invalid Email ID!');
-                    } else if (this.state.txtPassword === undefined) {
+                    } else if (this.state.txtPassword === '') {
                         alert('Please enter the Password.');
                     }else if (this.state.txtPassword.length < 6) {
                         alert('The Password should be at least 6 characters');
                     }
-                     else if (this.state.txtConifPassword === undefined) {
+                     else if (this.state.txtConifPassword === '') {
                         alert('Please enter Confirm Password.');
                     } else if (this.state.txtPassword !== this.state.txtConifPassword) {
                         alert('Please re-enter the Password.');
@@ -126,7 +138,12 @@ class Registration extends React.Component {
                     }
 
                   }
+clickToLogin=()=>
+{
 
+Actions.Login();
+
+}
 
 
      headerView() {
@@ -168,15 +185,9 @@ class Registration extends React.Component {
             loaded
         } = this.state;
 
-
-
-
-            return (
+    return (
               <View style={styles.container}>
-
-
-
-                                      <ImageBackground
+                               <ImageBackground
                                           style={styles.imgBackground}
                                           resizeMode='cover'
                                           source={require('../../assets/background.jpg')}>
@@ -260,7 +271,7 @@ class Registration extends React.Component {
                                                           placeholder="Email Id"
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtEmail => this.setState({txtEmail})}
                                                           />
                                                   </View>
                                                   </View>
@@ -272,8 +283,9 @@ class Registration extends React.Component {
                                                           style={{flex: 1, width: 100, fontSize:16}}
                                                           placeholder="Password"
                                                           placeholderTextColor="#fff"
+                                                          secureTextEntry={true}
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtPassword => this.setState({txtPassword})}
                                                           />
                                                   </View>
                                                   </View>
@@ -284,9 +296,10 @@ class Registration extends React.Component {
                                                       <TextInput
                                                           style={{flex: 1, width: 100, fontSize:16}}
                                                           placeholder="Confirm Password"
+                                                          secureTextEntry={true}
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtConifPassword => this.setState({txtConifPassword})}
                                                           />
                                                   </View>
                                                   </View>
@@ -297,7 +310,7 @@ class Registration extends React.Component {
 
                                           <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
                                           <TouchableOpacity
-                                            onPress={this.clickToLogin}
+                                            onPress={this.clickToRegistration}
                                           >
                                           <Image
                                                    source={require('../../assets/signIn.png')}
@@ -309,22 +322,14 @@ class Registration extends React.Component {
                                           <View style={{width:'100%',flexDirection:'row',marginTop:20,justifyContent:'center',alignItems:'center'}}>
 
                                             <TouchableOpacity
-                                                  onPress={this.clickToRegistration}
+                                                  onPress={this.clickToLogin}
                                                   >
-
-
-                                                        <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:16}}
+                                                <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:16}}
                                                               >
-                                                              Already Have an Account? Sign In
+                                                              Already Have an Account? Sign Infdfd
                                                               </Text>
-
-
-
                                               </TouchableOpacity>
-
-
-
-                                          </View>
+                                            </View>
 
                                           </View>
                                           </KeyboardAwareScrollView>

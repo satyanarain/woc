@@ -6,11 +6,12 @@
  */
 import React from 'react';
 import { StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
-import ResponsiveImage from 'react-native-responsive-image';
+
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
-
+import ResponsiveImage from 'react-native-responsive-image';
 class Login extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
@@ -80,10 +81,15 @@ class Login extends React.Component {
           }
     }
     clickToRegistration = () =>{
-
-
-      Actions.Registration();
+     Actions.Registration();
     }
+clickToSuggestedCentres=()=>
+{
+  Actions.SuggestedCentres();  
+    
+}
+
+
 
     clickToLogin = () => {
       //debugger;
@@ -148,15 +154,18 @@ class Login extends React.Component {
 
 
             return (
+              
                     <View style={styles.container}>
 
                         {
-                            
+
                                             <ImageBackground
                                                 style={styles.imgBackground}
                                                 resizeMode='cover'
                                                 source={require('../../assets/background.jpg')}>
+                                                <KeyboardAwareScrollView>
                                                 <View style={styles.container}>
+
                                                     <ResponsiveImage
                                                         source={require('../../assets/logo.jpg')}
                                                         style={{marginBottom: 30, marginTop: 210,height:73,width:159}}/>
@@ -191,6 +200,7 @@ class Login extends React.Component {
                                                             placeholder="Password"
                                                             placeholderTextColor="#fff"
                                                             underlineColorAndroid="transparent"
+                                                            secureTextEntry={true}
                                                             onChangeText={password => this.setState({password})}
                                                             />
                                                     </View>
@@ -199,7 +209,8 @@ class Login extends React.Component {
 
 
                                                 {
-                                                  (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
+                                                  (loaded === true) ? <View style={styles.containerActivety}>
+                                                  <View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
                                                 }
 
                                                 <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
@@ -251,39 +262,32 @@ class Login extends React.Component {
                                                         onPress={this.clickToRegistration}
                                                         >
 
-<<<<<<< HEAD
-
-                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
-                                                                    >
+                                                            <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}>
                                                                     Watch Training Video
                                                                     </Text>
 
+                                                    </TouchableOpacity>
+                                                <TouchableOpacity
+                                                        onPress={this.clickToSuggestedCentres}
+                                                        >
 
-
-=======
-
-                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
-                                                                    >
-                                                                    Watch Training Video
+                                                            <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}>
+                                                                    Suggested Centres
                                                                     </Text>
 
-
-
->>>>>>> f309b331bc7f5a6754542132e6e774a787af31ff
                                                     </TouchableOpacity>
                                                     </View>
                                                 </View>
                                             </View>
+ </KeyboardAwareScrollView>
                                         </ImageBackground>
+
+
                     }
 
-<<<<<<< HEAD
-
-=======
-                  
->>>>>>> f309b331bc7f5a6754542132e6e774a787af31ff
 
                     </View>
+                       
                                                       );
                                                     }
                                                 }

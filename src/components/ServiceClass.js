@@ -2,8 +2,10 @@ import React from 'react';
 import { View, Text, NetInfo, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import axios from 'axios';
 //const baseUrl = 'https://camstruction.com/api/';
-const baseUrl = 'http://13.233.61.172/api/';
+//const baseUrl = 'http://13.233.61.172/api/';
+const baseUrl = 'http://woc.demosteps.com/api/';
 //http://camstructionupdated.azurewebsites.net/api/photo
+//http://woc.demosteps.com/api/v1/
 export default class ServiceClass extends React.Component {
     state = {
         isConnected: true

@@ -101,11 +101,11 @@ this.inputRefs = {};
     }
 
     clickToLogin = () => {
-      if (this.state.SelectedLanguage == ''){
-        alert('Please select Language')
-      }else{
+//      if (this.state.SelectedLanguage == ''){
+//        alert('Please select Language')
+//      }else{
           Actions.Login();
-      }
+      //}
 
     }
 
