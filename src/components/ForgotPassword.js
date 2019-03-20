@@ -11,9 +11,8 @@ import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
 import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
 
-class Login extends React.Component {
+class ForgotPassword extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
     constructor(props) {
@@ -21,12 +20,12 @@ class Login extends React.Component {
 
         this.state = {
             loaded: false,
-            txtEmail: 'ravish_kumar@opiant.in',
+            txtEmail: '',
             token: "",
             tokenCopyFeedback: "",
             isVisible: true,
             Login: false,
-            password: 'pandey',
+            password: '',
             placeholderPassword:'Password',
             placeholderEmail:'Password',
             forgotPassword:'',
@@ -70,15 +69,10 @@ class Login extends React.Component {
             console.log("Email is Correct");
           }
     }
-    clickToRegistration = () =>{
+    clickToCancle = () =>{
 
 
-      Actions.Registration();
-    }
-    clickToForgotPass = () =>{
-
-
-      Actions.ForgotPassword();
+      Actions.pop();
     }
 
     clickToLogin = () => {
@@ -92,32 +86,33 @@ class Login extends React.Component {
 
 
         if (txtEmail === '') {
-            alert(this.props.lang.LOGIN_EMAIL_ERROR);
+            alert(this.props.lang.FORGOT_EMAIL_ERROR);
         }   else if (isValid === false) {
             alert(this.props.lang.LOGIN_EMAIL_VALID_ERROR);
           }
-         else if (password === '') {
-          alert(this.props.lang.LOGIN_PASSWORD_ERROR);
-        } else {
+          else {
 
             this.setState({loaded: true})
-            ServiceClass.loginData(txtEmail, password, this.props.selectedLangCode,'login').then((reData) => {
+            ServiceClass.loginData(txtEmail, password,'v2/login').then((reData) => {
 
-                if (reData.data.response.httpCode === '200'){
-                  this.props.saveLoginData(reData.data.response.body);
-                      this.setState({loaded: false});
-                }else{
-                  alert('error');
+                    this.setState({loaded: false});
+                    let token = reData.data.accessToken;
+                    console.log("accessToken" + token);
+                    RNSecureKeyStore.set("accessToken", token, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+                    .then((res) => {
+                      console.log(res);
+                    }, (err) => {
+                      console.log(err);
+                    });
+                    this.setState({loaded: false});
+                    Actions.Home();
 
-                }
-
-                this.setState({loaded: false});
             }).catch((error) => {
-
-                alert(error.message);
-
+                //debugger;
+                console.log(error.message);
+                  alert('Please enter correct Email ID or Password');
                 this.setState({loaded: false});
-
+                  //alert(error)
             });
         }
     }
@@ -170,28 +165,12 @@ class Login extends React.Component {
                                                             />
                                                     </View>
                                                     </View>
-                                                    <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
-                                                    <View style={{width:'12%',padding:12}}>
-                                                    <ResponsiveImage
-                                                        source={require('../../assets/password-icon.png')}
-                                                        style={{height:21,width:17}}/>
-                                                    </View>
-                                                    <View style={styles.SectionStyle2}>
-                                                        <TextInput
-                                                            style={{flex: 1, width: 100, fontSize:16}}
-                                                            placeholder={this.state.placeholderPassword}
-                                                            placeholderTextColor="#fff"
-                                                            underlineColorAndroid="transparent"
-                                                            onChangeText={password => this.setState({password})}
-                                                            />
-                                                    </View>
-                                                    </View>
 
 
 
                                                 {
-                                                  (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#A82047" /></View></View> : null
+                                                  (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
                                                 }
                                                 <TouchableOpacity
                                                   onPress={this.clickToLogin}
@@ -206,48 +185,15 @@ class Login extends React.Component {
 
                                                          <Text  style={{ textAlign:'left',color:'#000',fontWeight:'bold',fontSize:16}}
                                                                >
-                                                               {this.state.singIn}
+                                                               {this.props.lang.FORGOT_BUTTON_OK}
                                                                </Text>
                                                     </View>
 
                                                   </View>
-                                                  </TouchableOpacity>
-                                                <View style={{width:'100%',flexDirection:'row',marginTop:20}}>
-                                                  <View style={{width:'50%'}}>
-                                                  <TouchableOpacity
-                                                        onPress={this.clickToForgotPass}
-                                                        >
-
-
-                                                              <Text  style={{ textAlign:'left',color:'#fff',fontWeight:'bold',fontSize:16}}
-                                                                    >
-                                                                    {this.state.forgotPassword}
-                                                                    </Text>
-
-
-
-                                                    </TouchableOpacity>
-                                                    </View>
-                                                  <View style={{width:'50%'}}>
-                                                  <TouchableOpacity
-                                                        onPress={this.clickToRegistration}
-                                                        >
-
-
-                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18, textDecorationLine: 'underline'}}
-                                                                    >
-                                                                    {this.state.singUp}
-                                                                    </Text>
-
-
-
-                                                    </TouchableOpacity>
-                                                    </View>
-
-                                                </View>
-                                                <TouchableOpacity
-                                                        onPress={this.clickToRegistration}
-                                                        >
+</TouchableOpacity>
+<TouchableOpacity
+        onPress={this.clickToCancle}
+        >
                                                 <View style={{width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
 
 
@@ -255,7 +201,7 @@ class Login extends React.Component {
 
                                                               <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
                                                                     >
-                                                                    {this.state.watchVideo}
+                                                                    {this.props.lang.FORGOT_BUTTON_CANCEL}
                                                                     </Text>
 
 
@@ -471,8 +417,15 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps({ lang, selectedLangCode }){
-    let data =  lang.body[selectedLangCode]
-return { lang: data , selectedLangCode:selectedLangCode };
+  debugger;
+
+let data =  lang.body[selectedLangCode]
+//console.log(data);
+
+  return {
+
+    lang:data
+  };
 }
 
- export default connect(mapStateToProps,actions) (Login);
+ export default connect(mapStateToProps) (ForgotPassword);

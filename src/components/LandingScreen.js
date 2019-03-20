@@ -5,36 +5,38 @@
  * This is page for Request Form Appointment
  */
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
+import { AsyncStorage, StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
 import ResponsiveImage from 'react-native-responsive-image';
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
 import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
 import RNPickerSelect from 'react-native-picker-select';
+import * as actions from '../../actions';
+import { connect } from 'react-redux';
+import UserData from './UserData';
+
+
 class LandingScreen extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
     constructor(props) {
         super(props);
-this.inputRefs = {};
+        this.inputRefs = {};
         this.state = {
             loaded: false,
             arrLanguage: [],
-            SelectedLanguage:'',
+            SelectedLanguage:'hi',
 
 
         };
-//this.state = {password:"2016-05-15"}
+
     }
 
     componentWillMount(){
-      http://13.233.61.172/api/v1/get-language-list.
+
       this.setState({loaded: true})
 
-  ServiceClass.languageData('v1/get-language-list').then((reData) => {
-
-    console.log(reData.status);
-
+  ServiceClass.languageData('get-language-list').then((reData) => {
       for (var item in reData.data.response.body) {
 
                     console.log(reData.data.response.body[item].name);
@@ -100,12 +102,16 @@ this.inputRefs = {};
       Actions.Registration();
     }
 
-    clickToLogin = () => {
+    clickToContinue = async () => {
       if (this.state.SelectedLanguage == ''){
-        alert('Please select Language')
+        alert('Please select a language');
       }else{
+
+          this.props.saveLanguage(this.state.SelectedLanguage);
           Actions.Login();
       }
+
+
 
     }
 
@@ -161,7 +167,7 @@ this.inputRefs = {};
                   }}
               />
               <TouchableOpacity
-                              onPress={this.clickToLogin}
+                              onPress={this.clickToContinue}
                               style = {{width:'100%'}}
                               >
 
@@ -395,4 +401,7 @@ const styles = StyleSheet.create({
 
 
 });
- export default LandingScreen;
+
+
+
+ export default connect(null,actions) (LandingScreen);

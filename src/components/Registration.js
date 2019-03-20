@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNPickerSelect from 'react-native-picker-select';
-
+import { connect } from 'react-redux';
 class Registration extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
@@ -27,34 +27,15 @@ class Registration extends React.Component {
             date: '',
             txtLast:'',
             txtCompany:'',
-            //date: '07/01/1997',
+
 
         };
-//this.state = {date:"2016-05-15"}
+
     }
 
     /***********************************************************/
     componentDidMount() {
-        //  ServiceClass.SecondClassFunction();
-        var that = this;
-          //  alert(DeviceInfo.getDeviceId());
-
-        setTimeout(function () {
-
-            that.HideSplashScreen();
-
-        }, 3000);
-
-        setTimeout(() => {
-            this.setState({Login: true});
-        }, 2000);
-    }
-    HideSplashScreen = () => {
-
-        this.setState({
-            isVisible: false
-
-        });
+      //alert(this.props.lang.REGISTER_AGE)
     }
 
 
@@ -85,29 +66,38 @@ class Registration extends React.Component {
                   }
                   }
 
+                  clickToLogin(){
+                    Actions.pop();
+                  }
 
                   clickToRegistration = () =>{
                       var isValid    = this.validate(this.state.txtEmail);
                     //  alert(this.state.txtPassword.length);
-                    if (this.state.txtName === undefined) {
-                      alert('Please enter the Name.');
-                    } else if (this.state.txtEmail === '') {
-                        alert('Please enter the Email ID.');
-                    }     else if (isValid === false) {
-                        alert('You have entered an invalid Email ID!');
-                    } else if (this.state.txtPassword === undefined) {
-                        alert('Please enter the Password.');
-                    }else if (this.state.txtPassword.length < 6) {
-                        alert('The Password should be at least 6 characters');
+                    if (this.state.txtFName === undefined) {
+                      alert(this.props.lang.REGISTER_PATIENT_NAME_ERROR);
+                    }  else if (this.state.txtAge === undefined) {
+                        alert(this.props.lang.REGISTER_AGE_ERROR);
+                    } else if (this.state.txtMobile === undefined) {
+                        alert(this.props.lang.REGISTER_MOBILE_NO_ERROR);
                     }
+                    else if (this.state.txtEmail === '') {
+                       alert(this.props.lang.REGISTER_EMAIL_ERROR);
+                   }
+                       else if (isValid === false) {
+                          alert(this.props.lang.REGISTER_EMAIL_VALID_ERROR);
+                    } else if (this.state.txtPassword === undefined) {
+                      alert(this.props.lang.REGISTER_PASSWORD_ERROR);}
+                    // }else if (this.state.txtPassword.length < 6) {
+                    //     alert('The Password should be at least 6 characters');
+                    // }REGISTER_CONFIRM_PASSWORD
                      else if (this.state.txtConifPassword === undefined) {
-                        alert('Please enter Confirm Password.');
+                        alert(this.props.lang.REGISTER_CONFIRM_PASSWORD_ERROR);
                     } else if (this.state.txtPassword !== this.state.txtConifPassword) {
-                        alert('Please re-enter the Password.');
+                          alert(this.props.lang.REGISTER_CONFIRM_PASSWORD_ERROR);
                     }else{
 
                     this.setState({loaded: true});
-                            ServiceClass.signUp(this.state.txtName,this.state.txtLast,this.state.txtCompany,this.state.txtEmail,this.state.txtPassword,this.state.txtConifPassword,'v2/account').then((reData) => {
+                            ServiceClass.signUp(this.state.txtFName,this.state.txtLast,this.state.txtCompany,this.state.txtEmail,this.state.txtPassword,this.state.txtConifPassword,'signup-member').then((reData) => {
                                //debugger;
                                  console.log(reData);
 
@@ -190,7 +180,7 @@ class Registration extends React.Component {
 
                                                             <Text  style={{ textAlign:'left',color:'#000',fontSize:18,margin:8}}
                                                                   >
-                                                                  Personal Infromation
+                                                                  {this.props.lang.REGISTER_PERSONAL_INFO}
                                                                   </Text>
                                                   </View>
                                               <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
@@ -198,7 +188,7 @@ class Registration extends React.Component {
                                               <View style={styles.SectionStyle1}>
                                                   <TextInput
                                                       style={{flex: 1, width: 100, fontSize:16}}
-                                                      placeholder="First Name"
+                                                      placeholder={this.props.lang.REGISTER_NAME}
                                                       placeholderTextColor="#fff"
                                                       underlineColorAndroid="transparent"
                                                       onChangeText={txtFName => this.setState({txtFName})}
@@ -211,7 +201,7 @@ class Registration extends React.Component {
                                               <View style={styles.SectionStyle2}>
                                                   <TextInput
                                                       style={{flex: 1, width: 100, fontSize:16}}
-                                                      placeholder="Last Name"
+                                                      placeholder={this.props.lang.REGISTER_LAST_NAME}
                                                       placeholderTextColor="#fff"
                                                       underlineColorAndroid="transparent"
                                                       onChangeText={txtLName => this.setState({txtLName})}
@@ -224,9 +214,11 @@ class Registration extends React.Component {
                                               <View style={styles.SectionStyle2}>
                                                   <TextInput
                                                       style={{flex: 1, width: 100, fontSize:16}}
-                                                      placeholder="Age"
+                                                      placeholder={this.props.lang.REGISTER_AGE}
                                                       placeholderTextColor="#fff"
                                                       underlineColorAndroid="transparent"
+                                                      keyboardType='numeric'
+                                                      maxLength={3}
                                                       onChangeText={txtAge => this.setState({txtAge})}
                                                       />
                                               </View>
@@ -235,7 +227,7 @@ class Registration extends React.Component {
 
                                                             <Text  style={{ textAlign:'left',color:'#000',fontSize:18,margin:8}}
                                                                   >
-                                                                  Contact Infromation
+                                                                  {this.props.lang.REGISTER_CONTACT_INFO}
                                                                   </Text>
                                                   </View>
                                                   <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
@@ -244,9 +236,10 @@ class Registration extends React.Component {
                                                   <View style={styles.SectionStyle2}>
                                                       <TextInput
                                                           style={{flex: 1, width: 100, fontSize:16}}
-                                                          placeholder="Mobile"
+                                                          placeholder={this.props.lang.REGISTER_MOBILE_NO}
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
+                                                           keyboardType='numeric'
                                                           onChangeText={txtMobile => this.setState({txtMobile})}
                                                           />
                                                   </View>
@@ -257,10 +250,10 @@ class Registration extends React.Component {
                                                   <View style={styles.SectionStyle2}>
                                                       <TextInput
                                                           style={{flex: 1, width: 100, fontSize:16}}
-                                                          placeholder="Email Id"
+                                                          placeholder={this.props.lang.REGISTER_EMAIL}
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtEmail => this.setState({txtEmail})}
                                                           />
                                                   </View>
                                                   </View>
@@ -270,10 +263,10 @@ class Registration extends React.Component {
                                                   <View style={styles.SectionStyle2}>
                                                       <TextInput
                                                           style={{flex: 1, width: 100, fontSize:16}}
-                                                          placeholder="Password"
+                                                          placeholder={this.props.lang.REGISTER_PASSWORD}
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtPassword => this.setState({txtPassword})}
                                                           />
                                                   </View>
                                                   </View>
@@ -283,10 +276,10 @@ class Registration extends React.Component {
                                                   <View style={styles.SectionStyle2}>
                                                       <TextInput
                                                           style={{flex: 1, width: 100, fontSize:16}}
-                                                          placeholder="Confirm Password"
+                                                          placeholder={this.props.lang.REGISTER_CONFIRM_PASSWORD}
                                                           placeholderTextColor="#fff"
                                                           underlineColorAndroid="transparent"
-                                                          onChangeText={txtMobile => this.setState({txtMobile})}
+                                                          onChangeText={txtConifPassword => this.setState({txtConifPassword})}
                                                           />
                                                   </View>
                                                   </View>
@@ -295,27 +288,34 @@ class Registration extends React.Component {
                                             (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
                                           }
 
-                                          <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
+                                          <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'white',height:45,marginTop:20}}>
                                           <TouchableOpacity
-                                            onPress={this.clickToLogin}
+                                            onPress={this.clickToRegistration}
                                           >
+                                          <View style={{flexDirection:'row'}}>
                                           <Image
-                                                   source={require('../../assets/signIn.png')}
-                                                   style={{width:320,height:45,marginTop:10}}
+                                                   source={require('../../assets/signInBtn_icon.png')}
+                                                   style={{width:17,height:19,marginRight:10}}
                                                    />
+
+                                                   <Text  style={{ textAlign:'left',color:'#000',fontWeight:'bold',fontSize:16}}
+                                                         >
+                                                         {this.props.lang.REGISTER_BUTTON_SUBMIT}
+                                                         </Text>
+                                              </View>
                                             </TouchableOpacity>
                                             </View>
 
                                           <View style={{width:'100%',flexDirection:'row',marginTop:20,justifyContent:'center',alignItems:'center'}}>
 
                                             <TouchableOpacity
-                                                  onPress={this.clickToRegistration}
+                                                  onPress={this.clickToLogin}
                                                   >
 
 
                                                         <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:16}}
                                                               >
-                                                              Already Have an Account? Sign In
+                                                            {this.props.lang.REGISTER_OLD_ACCOUNT}
                                                               </Text>
 
 
@@ -618,4 +618,16 @@ const styles = StyleSheet.create({
 
 
 });
- export default Registration;
+
+function mapStateToProps({ lang, selectedLangCode }){
+  debugger;
+
+let data =  lang.body[selectedLangCode]
+console.log(data);
+
+  return {
+
+    lang:data
+  };
+}
+ export default connect(mapStateToProps)  (Registration);

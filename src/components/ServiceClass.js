@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, NetInfo, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, NetInfo, Dimensions, StyleSheet, SafeAreaView,AsyncStorage } from 'react-native';
 import axios from 'axios';
+import UserData from './UserData';
+
+
 //const baseUrl = 'https://camstruction.com/api/';
-const baseUrl = 'http://13.233.61.172/api/';
-//http://camstructionupdated.azurewebsites.net/api/photo
+//http://woc.demosteps.com/api/v1/get-language-list
+const baseUrl = 'http://13.233.61.172/api/v1/';
+import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
 export default class ServiceClass extends React.Component {
     state = {
         isConnected: true
@@ -25,11 +29,12 @@ export default class ServiceClass extends React.Component {
         }
     }
     ;
-  static loginData = (email, password, lastUrl) => {
+  static loginData = (email, password, langCode,lastUrl) => {
 
         return axios.post(baseUrl + lastUrl, {
-            username: email,
-            password: password
+            email: email,
+            password: password,
+            language: langCode
         });
     }
 
@@ -184,19 +189,39 @@ console.log(axiosConfig);
 
 
 
+        static getLanguageData =  () => {
+
+               axios.get("http://woc.demosteps.com/api/v1/get-language-variables").then((reData) => {
+                        debugger;
+
+
+
+                           AsyncStorage.setItem('products', JSON.stringify(reData.data.response.body.en) ).then( ()=>{
+                             console.log('It was saved successfully')
+                           } )
+                           .catch( ()=>{
+                             console.log('There was an error saving the product')
+                           } )
 
 
 
 
+               }).catch((error) => {
+                   //debugger;
+                   console.log(error.message);
+                    // alert('Please enter correct Email ID or Password');
+                   this.setState({loaded: false});
+                     //alert(error)
+               });;
 
+
+
+}
 
 static uploadPicture = (lastUrl,source) => {
   debugger;
-  //let photo = { uri: source.uri}
+
   let formdata = new FormData();
-
-
-
 
   formdata.append("id", 10)
   formdata.append("image", {uri: source.uri, name: 'image.jpg', type: 'multipart/form-data'})
