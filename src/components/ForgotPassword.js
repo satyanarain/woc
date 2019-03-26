@@ -46,8 +46,8 @@ class ForgotPassword extends React.Component {
 
         this.setState({placeholderEmail:this.props.lang.LOGIN_EMAIL_HINT});
         this.setState({placeholderPassword:this.props.lang.LOGIN_PASSWORD_HINT});
-        this.setState({forgotPassword:this.props.lang.FORGOT_HEADER});
-        this.setState({singUp:this.props.lang.LOGIN_BUTTON_SIGN_UP});
+
+
         this.setState({watchVideo:this.props.lang.LOGIN_BUTTON_SIGN_UP});
         this.setState({singIn:this.props.lang.LOGIN_BUTTON_SIGN_IN});
 
@@ -93,26 +93,25 @@ class ForgotPassword extends React.Component {
           else {
 
             this.setState({loaded: true})
-            ServiceClass.loginData(txtEmail, password,'v2/login').then((reData) => {
+            this.setState({loaded: true})
+            ServiceClass.forgotPasswordApi(txtEmail, this.props.selectedLangCode,'forgot-password').then((reData) => {
 
-                    this.setState({loaded: false});
-                    let token = reData.data.accessToken;
-                    console.log("accessToken" + token);
-                    RNSecureKeyStore.set("accessToken", token, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-                    .then((res) => {
-                      console.log(res);
-                    }, (err) => {
-                      console.log(err);
-                    });
-                    this.setState({loaded: false});
-                    Actions.Home();
+                if (reData.data.response.httpCode === '200'){
+                      this.setState({loaded: false});
+                      alert(reData.data.response.message);
+                      Actions.pop()
+                }else{
+                  alert('error');
 
-            }).catch((error) => {
-                //debugger;
-                console.log(error.message);
-                  alert('Please enter correct Email ID or Password');
+                }
+
                 this.setState({loaded: false});
-                  //alert(error)
+            }).catch((error) => {
+
+                alert(error.message);
+
+                this.setState({loaded: false});
+
             });
         }
     }
@@ -125,13 +124,7 @@ class ForgotPassword extends React.Component {
             loaded
         } = this.state;
 
-        let Splash_Screen = (
-                <View style={styles.SplashScreen_RootView}>
-                    <Image source={require('../../assets/background.jpg')}
-                           style={{height:'100%',width:'100%',flex:1}}
-                             resizeMode='cover' />
 
-                </View>);
 
 
             return (
@@ -422,10 +415,7 @@ function mapStateToProps({ lang, selectedLangCode }){
 let data =  lang.body[selectedLangCode]
 //console.log(data);
 
-  return {
-
-    lang:data
-  };
+  return { lang: data , selectedLangCode:selectedLangCode };
 }
 
  export default connect(mapStateToProps) (ForgotPassword);

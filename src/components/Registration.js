@@ -25,7 +25,7 @@ class Registration extends React.Component {
             isVisible: true,
             Login: false,
             date: '',
-            txtLast:'',
+            txtLName:'',
             txtCompany:'',
 
 
@@ -75,7 +75,10 @@ class Registration extends React.Component {
                     //  alert(this.state.txtPassword.length);
                     if (this.state.txtFName === undefined) {
                       alert(this.props.lang.REGISTER_PATIENT_NAME_ERROR);
-                    }  else if (this.state.txtAge === undefined) {
+                    }  else if (this.state.txtLName === '') {
+                        alert(this.props.lang.REGISTER_PATIENT_NAME_ERROR);
+                    }
+                     else if (this.state.txtAge === undefined) {
                         alert(this.props.lang.REGISTER_AGE_ERROR);
                     } else if (this.state.txtMobile === undefined) {
                         alert(this.props.lang.REGISTER_MOBILE_NO_ERROR);
@@ -97,13 +100,20 @@ class Registration extends React.Component {
                     }else{
 
                     this.setState({loaded: true});
-                            ServiceClass.signUp(this.state.txtFName,this.state.txtLast,this.state.txtCompany,this.state.txtEmail,this.state.txtPassword,this.state.txtConifPassword,'signup-member').then((reData) => {
-                               //debugger;
+                            ServiceClass.signUp(this.state.txtFName,this.state.txtLName,this.state.txtEmail,this.state.txtMobile,this.state.txtPassword,this.state.txtAge,'signup-member').then((reData) => {
+                               debugger;
                                  console.log(reData);
+                                 if (reData.data.response.httpCode === '200'){
+                                   //this.props.saveLoginData(reData.data.response.body);
+                                    this.setState({loaded: false});
+                                   alert(reData.data.response.message);
+                                    Actions.pop();
 
-                           alert("An activation link is sent on your registered Email ID!");
-                           Actions.pop();
-                            this.setState({loaded: false});
+                                 }else{
+                                   alert('error');
+this.setState({loaded: false});
+                                 }
+
 
                             }).catch((error) => {
                                 //debugger;
@@ -119,36 +129,7 @@ class Registration extends React.Component {
 
 
 
-     headerView() {
-       return (
-                 <View style={styles.containerView}>
-                     <View style={{width:'12%',paddingTop: 5,justifyContent:'center',alignItems:'center'}}>
-                     <TouchableOpacity
-                       onPress={() => Actions.pop()}
-                       title=""
-                     >
-
-                         </TouchableOpacity>
-                           </View>
-                           <View style={{width:'55%',  paddingTop: 5,justifyContent:'center',alignItems:'center'}} >
-                             <Text style={{fontSize: 20,
-                             color: 'white'}}>Register</Text>
-
-                         </View>
-                         <View style={{width:'28%',justifyContent:'center',alignItems:'center',paddingTop:5}}>
-                         <TouchableOpacity
-                           onPress={() => this.clickToRegistration()}
-                           title=""
-                         >
-
-                             </TouchableOpacity>
-                               </View>
-
-                   </View>
-
-
-       );
-    }
+  
 
     render() {
 
@@ -620,7 +601,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps({ lang, selectedLangCode }){
-  debugger;
+  // debugger;
 
 let data =  lang.body[selectedLangCode]
 console.log(data);

@@ -8,12 +8,12 @@ export const fetchLang = () => async (dispatch) => {
 
 var value = await AsyncStorage.getItem('languageData')
   if (value !== null){
-    debugger;
+  //  debugger;
     value = JSON.parse(value);
     console.log(value);
       dispatch({type:FETCH_LANG, payload:value});
   }else{
-    debugger;
+  //  debugger;
     let data  = await axios.get(ROOT_URL+'get-language-variables');
     dispatch({type:FETCH_LANG, payload: data.data.response});
     await AsyncStorage.setItem('languageData',JSON.stringify(data.data.response));

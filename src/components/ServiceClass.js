@@ -38,6 +38,35 @@ export default class ServiceClass extends React.Component {
         });
     }
 
+    static letSuggestedCenter = (langCode,lastUrl) => {
+
+          return axios.post(baseUrl + lastUrl, {
+              category: '2',
+              page: '1',
+              language: langCode
+          });
+      }
+    static searchCenter = (langCode,lastUrl,keyword,state) => {
+
+          return axios.post(baseUrl + lastUrl, {
+              category: '2',
+              page: '1',
+              language: langCode,
+              keyword:keyword,
+              state:state
+          });
+      }
+
+
+
+  static forgotPasswordApi = (email, langCode,lastUrl) => {
+        debugger;
+        return axios.post(baseUrl + lastUrl, {
+            email: email,
+            language: langCode
+        });
+    }
+
     static languageData = (lastUrl) => {
 
           return axios.get(baseUrl + lastUrl, {
@@ -46,15 +75,15 @@ export default class ServiceClass extends React.Component {
       }
 
 
-    static signUp = (firstName, lastName,companyName,email,password, confirmPassword,lastUrl) => {
+    static signUp = (firstName, lastName,email,mobile, password,age,lastUrl) => {
 
           return axios.post(baseUrl + lastUrl, {
-              FirstName: firstName,
-              LastName: lastName,
-              CompanyName:companyName,
-              EmailAddress:email,
-              Password:password,
-              ConfirmPassword:confirmPassword
+              first_name: firstName,
+              last_name: "lastName",
+              email:email,
+              phone_number:mobile,
+              password:password,
+              age:age
           });
       }
 

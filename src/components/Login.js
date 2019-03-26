@@ -104,8 +104,9 @@ class Login extends React.Component {
             ServiceClass.loginData(txtEmail, password, this.props.selectedLangCode,'login').then((reData) => {
 
                 if (reData.data.response.httpCode === '200'){
-                  this.props.saveLoginData(reData.data.response.body);
+                      this.props.saveLoginData(reData.data.response.body);
                       this.setState({loaded: false});
+                      Actions.Home();
                 }else{
                   alert('error');
 
