@@ -30,6 +30,20 @@ class Home extends React.Component {
 
     }
 
+<<<<<<< HEAD
+=======
+
+    clickToSuggestedCenterViewMore = () => {
+      Actions.SuggestedCentres();
+    }
+    clickToTraningViewMore = () => {
+      Actions.TraningList();
+    }
+
+
+
+
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     /*
      @handleKeyDown: this function use to close the keyboard on return click.
                    */
@@ -65,7 +79,11 @@ const placeholder = {
                                    <View style={styles.rowRight}>
                                        <TouchableOpacity
                                            style={styles.button}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToDonate}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <Text style={styles.textColor}>
                                            <ResponsiveImage source={require('../../assets/donate.png')}  initWidth="16" initHeight="16"/>{this.props.lang.MENU_DONATE}</Text>
@@ -79,7 +97,11 @@ const placeholder = {
                                        <Text style={styles.textColorBold}>{this.props.lang.MENU_SUGGESSTION}</Text>
                                    </View>
                                    <View style={styles.rowRight}>
+<<<<<<< HEAD
                                        <TouchableOpacity onPress={this.onPress}
+=======
+                                       <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                                          >
                                            <Text style={styles.textColorLink}>View More</Text>
                                        </TouchableOpacity>
@@ -109,7 +131,11 @@ const placeholder = {
                                        <Text style={styles.textColorBold}>{this.props.lang.MENU_TRAINING}</Text>
                                    </View>
                                    <View style={styles.rowRight}>
+<<<<<<< HEAD
                                        <TouchableOpacity onPress={this.onPress}
+=======
+                                       <TouchableOpacity onPress={this.clickToTraningViewMore}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                                          >
                                            <Text style={styles.textColorLink}>View More</Text>
                                        </TouchableOpacity>
@@ -139,7 +165,11 @@ const placeholder = {
 
                                     <TouchableOpacity
                                            style={styles.buttonProfile}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToProfile}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <ResponsiveImage source={require('../../assets/profile.png')}  initWidth="29" initHeight="27"/>
                                            <Text style={styles.textColor}> {this.props.lang.MENU_PROFILE}</Text>
@@ -148,14 +178,22 @@ const placeholder = {
                                       <View style={styles.suggestedImgRight}>
                                        <TouchableOpacity
                                            style={styles.buttonFeedBack}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToFeedBack}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <Text style={styles.textColor}>
                                            <ResponsiveImage source={require('../../assets/feedbackForm.png')}  initWidth="25" initHeight="26"/> {this.props.lang.MENU_FEEDBACK}</Text>
                                        </TouchableOpacity>
                                        <TouchableOpacity
                                            style={styles.buttonTrain}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToJob}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <Text style={styles.textColor}>
                                            <ResponsiveImage source={require('../../assets/trainingJobStatus.png')}  initWidth="26" initHeight="24"/> {this.props.lang.MENU_JOB}</Text>
@@ -170,7 +208,11 @@ const placeholder = {
 
                                     <TouchableOpacity
                                            style={styles.buttonScholarship}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToScolarship}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <ResponsiveImage source={require('../../assets/Scholarship.png')}  initWidth="29" initHeight="27"/>
                                            <Text style={styles.textColor}> {this.props.lang.MENU_SCHOLARSHIP}</Text>
@@ -179,14 +221,22 @@ const placeholder = {
                                       <View style={styles.scholarshipRight}>
                                        <TouchableOpacity
                                            style={styles.buttonItPartner}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToITPartner}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <Text style={styles.textColor}>
                                            <ResponsiveImage source={require('../../assets/ITPartner.png')}  initWidth="30" initHeight="22" style={{marginRight:10}}/> {this.props.lang.MENU_IT_PARTNER}</Text>
                                        </TouchableOpacity>
                                        <TouchableOpacity
                                            style={styles.aboutUs}
+<<<<<<< HEAD
                                            onPress={this.onPress}
+=======
+                                           onPress={this.clickToAboutUs}
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <Text style={styles.textColor}>
                                            <ResponsiveImage source={require('../../assets/aboutUs.png')}  initWidth="25" initHeight="25"/>  {this.props.lang.MENU_ABOUT_US}</Text>
@@ -212,7 +262,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
   },
   buttonFeedBack: {
@@ -221,7 +275,11 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     paddingLeft: 10,
     marginBottom:5,
@@ -232,7 +290,11 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     paddingLeft: 10,
     marginBottom:5,
@@ -244,7 +306,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
     marginBottom:0,
   },
@@ -255,7 +321,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
     marginBottom:0,
   },
@@ -264,7 +334,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     marginBottom:0,
     height:100,
@@ -278,7 +352,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius:5,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
 
     height:100,
@@ -293,7 +371,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius:10,
     color:'#fff',
+<<<<<<< HEAD
     fontFamily: "PTS75F",
+=======
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:8,
   },
 
@@ -319,10 +401,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
+<<<<<<< HEAD
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+=======
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     elevation: 1,
     width:'32%'
  },
@@ -331,6 +420,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
+<<<<<<< HEAD
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -338,6 +428,15 @@ const styles = StyleSheet.create({
     elevation: 1,
     width:'31%',
     fontFamily: "PTS75F",
+=======
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'31%',
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
  },
  scholarshipLeft: {
@@ -345,6 +444,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
+<<<<<<< HEAD
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -352,6 +452,15 @@ const styles = StyleSheet.create({
     elevation: 1,
     width:'31%',
     fontFamily: "PTS75F",
+=======
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'31%',
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
  },
  suggestedImgRight: {
@@ -359,6 +468,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
+<<<<<<< HEAD
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -366,12 +476,22 @@ const styles = StyleSheet.create({
     elevation: 1,
     width:'67%',
     fontFamily: "PTS75F",
+=======
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'67%',
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
  },
  scholarshipRight: {
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
+<<<<<<< HEAD
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -380,11 +500,25 @@ const styles = StyleSheet.create({
     width:'67%',
     height:120,
     fontFamily: "PTS75F",
+=======
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'67%',
+    height:120,
+    fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
  },
 
    textColorBlack: {
       color:'#471e24',
+<<<<<<< HEAD
        fontFamily: "PTS75F",
+=======
+       fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
        fontSize:14,
        paddingTop:10,
        textAlign:'center'
@@ -395,7 +529,11 @@ const styles = StyleSheet.create({
    {
      flex: 1,
       backgroundColor: '#fff',
+<<<<<<< HEAD
       fontFamily: "PTS75F",
+=======
+      fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
    },
   mainRow: {
@@ -404,7 +542,11 @@ const styles = StyleSheet.create({
        borderBottomWidth:1,
        borderColor:"#fff",
        paddingBottom:5,
+<<<<<<< HEAD
        fontFamily: "PTS75F",
+=======
+       fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
      },
   mainRowSub: {
       width:'100%',
@@ -414,33 +556,57 @@ const styles = StyleSheet.create({
        paddingBottom:5,
        // backgroundColor: '#0f0',
         paddingTop:20,
+<<<<<<< HEAD
         fontFamily: "PTS75F",
+=======
+        fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
      },
 
     rowLeft: {
        width:'70%',
+<<<<<<< HEAD
        fontFamily: "PTS75F",
+=======
+       fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
    },
     textColor: {
        color:'#fff',
+<<<<<<< HEAD
      fontFamily: "PTS75F",
    },
     textColorBold: {
        color:'#471e24',
       fontFamily: "PTS75F",
+=======
+     fontFamily: "Helvetica",
+   },
+    textColorBold: {
+       color:'#471e24',
+      fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
       fontSize:16,
    },
     textColorLink: {
        color:'#75364e',
+<<<<<<< HEAD
        fontFamily: "PTS75F",
+=======
+       fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
        fontSize:14,
    },
  rowRight: {
       width:'30%',
       paddingTop:7,
       paddingLeft:10,
+<<<<<<< HEAD
       fontFamily: "PTS75F",
+=======
+      fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
    },
 
@@ -448,7 +614,11 @@ const styles = StyleSheet.create({
        width:'95%',
        marginTop: 10,
         marginLeft: 10,
+<<<<<<< HEAD
         fontFamily: "PTS75F",
+=======
+        fontFamily: "Helvetica",
+>>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     },
 });
 function mapStateToProps({ lang, selectedLangCode }){
