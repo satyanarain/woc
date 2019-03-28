@@ -12,6 +12,9 @@ import { Alert, StatusBar } from 'react-native';
 import * as actions from '../../actions';
 import Home from './Home';
 import SuggestedCentres from './SuggestedCentres';
+import TraningList from './TraningList';
+
+
 
 class RouterComponent extends Component {
   constructor() {
@@ -69,6 +72,7 @@ class RouterComponent extends Component {
         <Scene key='ForgotPassword' component={ForgotPassword} title='' />
         <Scene key='Home' component={Home} title='' />
         <Scene key='SuggestedCentres' component={SuggestedCentres} title='' />
+        <Scene key='TraningList' component={TraningList} title='' />
 
 
      </Scene>

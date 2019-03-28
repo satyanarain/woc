@@ -1,16 +1,18 @@
 /*
  * @author satya
- * created password  2 Aug 2018
- * Modified  19 November 2018
- * This is page for Request Form Appointment
+ * created date  22nd March 2019
+ * Modified 22nd March 2019
+ * This is Home Screen
  */
 import React from 'react';
-import {AsyncStorage, StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
-import ResponsiveImage from 'react-native-responsive-image';
+import { StyleSheet, TextInput,KeyboardAvoidingView,SafeAreaView, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar,Keyboard,Animated,ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
-import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
+import CustomHeader from './CustomHeader';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import RNPickerSelect from 'react-native-picker-select';
 import { connect } from 'react-redux';
+import ResponsiveImage from 'react-native-responsive-image';
 import * as actions from '../../actions';
 
 class Home extends React.Component {
@@ -18,104 +20,37 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             loaded: false,
-            txtEmail: 'ravish_kumar@opiant.in',
-            token: "",
-            tokenCopyFeedback: "",
-            isVisible: true,
-            Login: false,
-            password: 'pandey',
-            placeholderPassword:'Password',
-            placeholderEmail:'Password',
-            forgotPassword:'',
-            singUp:'',
-            watchVideo:'',
-            singIn:'',
+         };
 
-        };
+    }
+ /***********************************************************/
+    componentDidMount() {
 
     }
 
 
-    componentDidMount  ()  {
-
-
-
-
-
-    }
-
-
-    validate = (text) => {
-
-          console.log(text);
-          let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-          if(reg.test(text) === false)
-          {
-          console.log("Email is Not Correct");
-          this.setState({email:text})
-          return false;
-            }
-          else {
-            this.setState({email:text})
-            console.log("Email is Correct");
-          }
-    }
-    clickToRegistration = () =>{
-
-
-      Actions.Registration();
-    }
-    clickToForgotPass = () =>{
-
-
+    clickToSuggestedCenterViewMore = () => {
       Actions.SuggestedCentres();
     }
-
-    clickToLogin = () => {
-      //debugger;
-
-//ServiceClass.SecondClassFunctionWithArgument('82503220', '07/01/1997', 'login');
-        const {txtEmail} = this.state;
-        const {password} = this.state;
-
-      var isValid    = this.validate(txtEmail);
+    clickToTraningViewMore = () => {
+      Actions.TraningList();
+    }
 
 
-        if (txtEmail === '') {
-            alert(this.props.lang.LOGIN_EMAIL_ERROR);
-        }   else if (isValid === false) {
-            alert(this.props.lang.LOGIN_EMAIL_VALID_ERROR);
-          }
-         else if (password === '') {
-          alert(this.props.lang.LOGIN_PASSWORD_ERROR);
-        } else {
 
-            this.setState({loaded: true})
-            ServiceClass.loginData(txtEmail, password, this.props.selectedLangCode,'login').then((reData) => {
 
-                if (reData.data.response.httpCode === '200'){
-                  this.props.saveLoginData(reData.data.response.body);
-                      this.setState({loaded: false});
-                }else{
-                  alert('error');
-
-                }
-
-                this.setState({loaded: false});
-            }).catch((error) => {
-
-                alert(error.message);
-
-                this.setState({loaded: false});
-
-            });
+    /*
+     @handleKeyDown: this function use to close the keyboard on return click.
+                   */
+    handleKeyDown = (e) => {
+        if (e.nativeEvent.key == "Enter") {
+            Keyboard.dismiss();
         }
     }
 
-    render() {
+   render() {
 
         const isIos = Platform.OS === 'ios'
         const {
@@ -123,244 +58,418 @@ class Home extends React.Component {
             loaded
         } = this.state;
 
-        let Splash_Screen = (
-                <View style={styles.SplashScreen_RootView}>
-                    <Image source={require('../../assets/background.jpg')}
-                           style={{height:'100%',width:'100%',flex:1}}
-                             resizeMode='cover' />
+const placeholder = {
+            label: 'Select a sport...',
+            value: null,
+            color: '#9EA0A4',
+        };
 
-                </View>);
+ return (
+         <SafeAreaView style={styles.safeArea}>
+                   <View style={styles.MainContainer}>
+                       <View style={styles.subcontainer}>
+                           <KeyboardAwareScrollView>
+                               <View style={styles.mainRow}>
+                                   <View style={styles.rowLeft}>
+                                       <ResponsiveImage  source={require('../../assets/home-logo.png')}   initWidth="147" initHeight="67"/>
+                                   </View>
+                                   <View style={styles.rowRight}>
+                                       <TouchableOpacity
+                                           style={styles.button}
+                                           onPress={this.clickToDonate}
+                                           >
+                                           <Text style={styles.textColor}>
+                                           <ResponsiveImage source={require('../../assets/donate.png')}  initWidth="16" initHeight="16"/>{this.props.lang.MENU_DONATE}</Text>
+                                       </TouchableOpacity>
 
+                                   </View>
+                               </View>
+                               { /*******************************************Suggested Centres start************************/}
+                               <View style={styles.mainRow}>
+                                   <View style={styles.rowLeft}>
+                                       <Text style={styles.textColorBold}>{this.props.lang.MENU_SUGGESSTION}</Text>
+                                   </View>
+                                   <View style={styles.rowRight}>
+                                       <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore}
+                                                         >
+                                           <Text style={styles.textColorLink}>View More</Text>
+                                       </TouchableOpacity>
 
-            return (
-                    <View style={styles.container}>
+                                   </View>
+                               </View>
+                               { /***********************images********************************************/}
+                               <View style={styles.spaceBetween}>
+                                   <View style={styles.suggestedImg}>
+                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
+                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                                   <View style={styles.suggestedImg}>
+                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
+                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                                   <View style={styles.suggestedImg}>
+                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
+                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                               </View>
+                                { /**********************************Suggested Centres end*********************************/}
 
-                        {
+                               { /*******************************************Training Centres start************************/}
+                               <View style={styles.mainRowSub}>
+                                   <View style={styles.rowLeft}>
+                                       <Text style={styles.textColorBold}>{this.props.lang.MENU_TRAINING}</Text>
+                                   </View>
+                                   <View style={styles.rowRight}>
+                                       <TouchableOpacity onPress={this.clickToTraningViewMore}
+                                                         >
+                                           <Text style={styles.textColorLink}>View More</Text>
+                                       </TouchableOpacity>
 
-                                            <ImageBackground
-                                                style={styles.imgBackground}
-                                                resizeMode='cover'
-                                                source={require('../../assets/background.jpg')}>
-                                                <View style={{width:'100%',backgroundColor:'#FFFFFF10',flex:1,marginTop:5,marginBottom:10,justifyContent:'center',alignItems:'center'}}>
-                                                <TouchableOpacity
-                                                      onPress={this.clickToForgotPass}
-                                                      >
-                                                              <Text  style={{ textAlign:'left',color:'#000',fontSize:18,margin:8}}
-                                                                    >
-                                                                    {this.props.lang.REGISTER_PERSONAL_INFO}
-                                                                    </Text>
+                                   </View>
+                               </View>
+                               { /***********************images********************************************/}
+                               <View style={styles.spaceBetween}>
+                                   <View style={styles.suggestedImg}>
+                                    <Image source={require('../../assets/sc_box_img1.png')} style={styles.imgRadius}/>
+                                      <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                                   <View style={styles.suggestedImg}>
+                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
+                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                                   <View style={styles.suggestedImg}>
+                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
+                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
+                                   </View>
+                               </View>
+                                { /**********************************Training Centres end*********************************/}
 
-                                                    </TouchableOpacity>
-                                                      </View>
+                               { /***********************Profile********************************************/}
+                               <View style={styles.spaceBetweenProfile}>
+                                   <View style={styles.suggestedImgLeft}>
 
-                                        </ImageBackground>
-                    }
+                                    <TouchableOpacity
+                                           style={styles.buttonProfile}
+                                           onPress={this.clickToProfile}
+                                           >
+                                           <ResponsiveImage source={require('../../assets/profile.png')}  initWidth="29" initHeight="27"/>
+                                           <Text style={styles.textColor}> {this.props.lang.MENU_PROFILE}</Text>
+                                       </TouchableOpacity>
+                                      </View>
+                                      <View style={styles.suggestedImgRight}>
+                                       <TouchableOpacity
+                                           style={styles.buttonFeedBack}
+                                           onPress={this.clickToFeedBack}
+                                           >
+                                           <Text style={styles.textColor}>
+                                           <ResponsiveImage source={require('../../assets/feedbackForm.png')}  initWidth="25" initHeight="26"/> {this.props.lang.MENU_FEEDBACK}</Text>
+                                       </TouchableOpacity>
+                                       <TouchableOpacity
+                                           style={styles.buttonTrain}
+                                           onPress={this.clickToJob}
+                                           >
+                                           <Text style={styles.textColor}>
+                                           <ResponsiveImage source={require('../../assets/trainingJobStatus.png')}  initWidth="26" initHeight="24"/> {this.props.lang.MENU_JOB}</Text>
+                                       </TouchableOpacity>
+                                   </View>
+                                  </View>
 
+                                { /*********************** End Profile********************************************/}
+                               { /***********************Scholarship********************************************/}
+                               <View style={styles.spaceBetweenProfile}>
+                                   <View style={styles.scholarshipLeft}>
 
+                                    <TouchableOpacity
+                                           style={styles.buttonScholarship}
+                                           onPress={this.clickToScolarship}
+                                           >
+                                           <ResponsiveImage source={require('../../assets/Scholarship.png')}  initWidth="29" initHeight="27"/>
+                                           <Text style={styles.textColor}> {this.props.lang.MENU_SCHOLARSHIP}</Text>
+                                       </TouchableOpacity>
+                                    </View>
+                                      <View style={styles.scholarshipRight}>
+                                       <TouchableOpacity
+                                           style={styles.buttonItPartner}
+                                           onPress={this.clickToITPartner}
+                                           >
+                                           <Text style={styles.textColor}>
+                                           <ResponsiveImage source={require('../../assets/ITPartner.png')}  initWidth="30" initHeight="22" style={{marginRight:10}}/> {this.props.lang.MENU_IT_PARTNER}</Text>
+                                       </TouchableOpacity>
+                                       <TouchableOpacity
+                                           style={styles.aboutUs}
+                                           onPress={this.clickToAboutUs}
+                                           >
+                                           <Text style={styles.textColor}>
+                                           <ResponsiveImage source={require('../../assets/aboutUs.png')}  initWidth="25" initHeight="25"/>  {this.props.lang.MENU_ABOUT_US}</Text>
+                                       </TouchableOpacity>
+                                   </View>
+                                  </View>
+                                  <View style={{height:10}}></View>
 
+                                { /***********************Profile********************************************/}
+                                </KeyboardAwareScrollView>
+                     </View>
                     </View>
-                                                      );
-                                                    }
-                                                }
-
-
+                </SafeAreaView>
+                      );
+                }
+    }
 
 
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#0095d3',
+    padding: 12,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:5,
+  },
+  buttonFeedBack: {
+    backgroundColor: '#0095d3',
+    paddingBottom: 10,
+    paddingTop: 5,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:0,
+    paddingLeft: 10,
+    marginBottom:5,
+  },
+  buttonItPartner: {
+    backgroundColor: '#1262a1',
+    paddingBottom: 10,
+    paddingTop: 5,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:0,
+    paddingLeft: 10,
+    marginBottom:5,
+  },
+  buttonTrain: {
+    backgroundColor: '#a5409f',
+    paddingBottom: 10,
+    paddingTop: 5,
+    paddingLeft: 10,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:5,
+    marginBottom:0,
+  },
+  aboutUs: {
+    backgroundColor: '#f23c8b',
+    paddingBottom: 10,
+    paddingTop: 5,
+    paddingLeft: 10,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:5,
+    marginBottom:0,
+  },
+  buttonProfile: {
+    backgroundColor: '#64c12b',
+    padding: 12,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:0,
+    marginBottom:0,
+    height:100,
+    width:100,
+    textAlign:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonScholarship: {
+    backgroundColor: '#ff6c00',
+    padding: 12,
+    borderRadius:5,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:0,
 
-    container: {
-        flex: 1,
-        margin: 0,
-        padding: 0,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
+    height:100,
+    width:100,
+   textAlign:'center',
+   justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+    buttonBottom: {
+     backgroundColor: '#0095d3',
+    padding: 10,
+    borderRadius:10,
+    color:'#fff',
+    fontFamily: "Helvetica",
+    marginTop:8,
+  },
+
+
+
+ safeArea: {
+    flex: 1,
+
+  },
+ imgRadius: {
+   borderRadius:10,borderWidth:1,height: 100, width: 100,
+
+  },
+ spaceBetween: {
+    flexDirection: 'row', justifyContent: 'space-between'
+ },
+ spaceBetweenProfile: {
+    flexDirection: 'row', justifyContent: 'space-between',marginTop:20,marginBottom:0
+ },
+
+ suggestedImg: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    padding:10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'32%'
+ },
+ suggestedImgLeft: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    padding:10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'31%',
+    fontFamily: "Helvetica",
+
+ },
+ scholarshipLeft: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    padding:10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'31%',
+    fontFamily: "Helvetica",
+
+ },
+ suggestedImgRight: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    padding:10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'67%',
+    fontFamily: "Helvetica",
+ },
+ scholarshipRight: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    padding:10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
+    width:'67%',
+    height:120,
+    fontFamily: "Helvetica",
+ },
+
+   textColorBlack: {
+      color:'#471e24',
+       fontFamily: "Helvetica",
+       fontSize:14,
+       paddingTop:10,
+       textAlign:'center'
+   },
+
+
+  MainContainer:
+   {
+     flex: 1,
+      backgroundColor: '#fff',
+      fontFamily: "Helvetica",
+
+   },
+  mainRow: {
+      width:'100%',
+      flexDirection:'row',
+       borderBottomWidth:1,
+       borderColor:"#fff",
+       paddingBottom:5,
+       fontFamily: "Helvetica",
+     },
+  mainRowSub: {
+      width:'100%',
+      flexDirection:'row',
+       borderBottomWidth:1,
+       borderColor:"#fff",
+       paddingBottom:5,
+       // backgroundColor: '#0f0',
+        paddingTop:20,
+        fontFamily: "Helvetica",
+     },
+
+    rowLeft: {
+       width:'70%',
+       fontFamily: "Helvetica",
+
+   },
+    textColor: {
+       color:'#fff',
+     fontFamily: "Helvetica",
+   },
+    textColorBold: {
+       color:'#471e24',
+      fontFamily: "Helvetica",
+      fontSize:16,
+   },
+    textColorLink: {
+       color:'#75364e',
+       fontFamily: "Helvetica",
+       fontSize:14,
+   },
+ rowRight: {
+      width:'30%',
+      paddingTop:7,
+      paddingLeft:10,
+      fontFamily: "Helvetica",
+
+   },
+
+ subcontainer: {
+       width:'95%',
+       marginTop: 10,
+        marginLeft: 10,
+        fontFamily: "Helvetica",
     },
-    MainContainer:
-            {
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-
-                paddingTop: (Platform.OS === 'ios') ? 20 : 0
-            },
-
-    container_logo: {
-        //  margin: 0,
-        marginBottom: 20,
-        padding: 0,
-        alignItems: 'center',
-    },
-    shadow1: {
-        //  margin: 0,
-        marginBottom: 0,
-        padding: 0,
-        alignItems: 'center',
-    },
-
-    container_home: {
-        backgroundColor: '#4286f4',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginTop: 50,
-
-    },
-    imgBackground: {
-        width: '100%',
-        height: '100%',
-        //resizeMode: 'cover',
-        flex: 1,
-
-    },
-    ImageStyle: {
-        padding: 10,
-        margin: 5,
-        height: 20,
-        width: 8,
-        resizeMode: 'stretch',
-        alignItems: 'center'
-    },
-    ImageStyle_birth: {
-        padding: 10,
-        marginLeft: 5,
-        marginRight: 5,
-        //paddingLeft:10,
-        height: 20,
-        width: 20,
-        resizeMode: 'stretch',
-        alignItems: 'center'
-    },
-    viewStyleOne: {
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#b642f4'
-    },
-    textStyle: {
-        textAlign: 'center'
-    },
-    innerContainer: {
-        flex: .5,
-        flexDirection: 'row',
-        alignItems: 'flex-start' //replace with flex-end or center
-    },
-    SectionStyle: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        //backgroundColor: '#0f0',
-        borderWidth: .5,
-        borderColor: '#1A44F2',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-
-        height: 40,
-        borderRadius: 5,
-        margin: 20,
-
-        paddingLeft: 40,
-        shadowOffset: {width: 5, height: 5, },
-        borderWidth: 1,
-
-    },
-
-    SectionStyle1: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width:'80%',
-        height: 40,
-
-
-
-
-    },
-    SectionStyle2: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width:'80%',
-      height: 40,
-      marginTop:5
-
-    },
-    textInput:
-            {
-                height: 40,
-                borderWidth: 1,
-                marginVertical: 5,
-                alignSelf: 'stretch',
-                padding: 8,
-                fontSize: 16,
-                backgroundColor: '#ede9e0',
-                color: '#ede9e0',
-                borderColor: '#ede9e0',
-
-                margin: 30,
-            },
-    SplashScreen_RootView:
-            {
-                flex: 1,
-                margin: 0,
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-
-            },
-    SplashScreen_ChildView:
-            {
-                justifyContent: 'center',
-                alignItems: 'center',
-
-                flex: 1,
-
-            },
-
-    TouchableOpacity_Style: {
-
-        position: 'absolute',
-        zIndex: 100000
-
-    },
-    container2: {
-        flex: .5,
-        flexDirection: 'row',
-        alignItems: 'flex-start' //replace with flex-end or center
-    },
-    box: {
-        width: 100,
-        height: 100
-    },
-    box1: {
-        backgroundColor: '#2196F3'
-    },
-    box2: {
-        backgroundColor: '#8BC34A'
-    },
-    box3: {
-        backgroundColor: '#e3aa1a'
-    },
-    containerActivety: {
-
-        backgroundColor: 'transparent',
-        height: '100%',
-        width: '100%',
-        zIndex: 10000000,
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-
-
 });
-
 function mapStateToProps({ lang, selectedLangCode }){
-//  debugger;
-    let data =  lang.body[selectedLangCode]
-return { lang: data , selectedLangCode:selectedLangCode };
-}
+ debugger;
 
- export default connect(mapStateToProps,actions) (Home);
+let data =  lang.body[selectedLangCode]
+console.log(data);
+
+  return {
+   lang:data
+  };
+}
+ export default connect(mapStateToProps)  (Home);

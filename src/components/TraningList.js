@@ -17,7 +17,7 @@ import * as actions from '../../actions';
 import { connect } from 'react-redux';
 import FastImage from 'react-native-fast-image'
 
-class SuggestedCentres extends React.Component {
+class TraningList extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
     constructor(props) {
@@ -39,7 +39,7 @@ componentWillMount(){
 
   this.setState({loaded: true})
 
-  ServiceClass.letSuggestedCenter(this.props.selectedLangCode,'get-training-center-list').then((reData) => {
+  ServiceClass.languageData('get-training-list').then((reData) => {
 
 
     console.log(reData.data.response.body);
@@ -151,51 +151,7 @@ searchSubmit = () =>{
 
               />
                </View>
-                           <View style={styles.subcontainer}>
-                                          <View style={styles.logo}>
-                                              <ResponsiveImage  source={require('../../assets/home-logo.png')}   initWidth="159" initHeight="73"/>
-                                            </View>
-
-                                              <View style={styles.searchTop}>
-                                              <View style={styles.searchText}>
-                                              <TextInput style={[styles.input]}
-                                              underlineColorAndroid = "transparent"
-                                              placeholder = {this.props.lang.CENTER_HINT}
-                                              placeholderTextColor = "#660833"
-                                              autoCapitalize = "none"
-                                                onChange={(event) => {
-                                                  this.searchChange(event.nativeEvent.text)
-                                                }}
-                                                returnKeyType='search'
-                                                autoFocus={false}
-                                                value={ this.props.searchName }
-                                                onSubmitEditing={this.searchSubmit}
-                                                clearButtonMode="while-editing"
-                                              />
-                                              </View>
-                                              <View style={styles.searchImageFirst}>
-                                                   <ResponsiveImage
-                                                  source={require('../../assets/search.png')}  initWidth="16" initHeight="16"/>
-                                              </View>
-                                              </View>
-                                              <View style={styles.search}>
-                                              <View style={styles.searchText}>
-                   <RNPickerSelect
-                    placeholder={{
-                        label: this.props.lang.CENTER_SELECT,
-                        value: null,
-                    }}
-                    items={this.state.arrState}
-                    onValueChange={(value) => {
-                        this.setState({
-                            selectedState: value,
-                        });
-                    }}
-
-                   style={{ ...pickerSelectStyles }}
-
-                />
-       </View>
+                  
                                   <View style={styles.searchImage}>
                                          <ResponsiveImage
                                                   source={require('../../assets/downArrow.png')}  initWidth="16" initHeight="16"/>
@@ -445,4 +401,4 @@ return { lang: data , selectedLangCode:selectedLangCode };
 }
 
 
- export default connect(mapStateToProps,actions) (SuggestedCentres);
+ export default connect(mapStateToProps,actions) (TraningList);

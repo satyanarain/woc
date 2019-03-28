@@ -39,8 +39,6 @@
 		78B2BF7C881B4CC4AE026681 /* PTS75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A50CE96DF69B49AFA0EA3422 /* PTS75F.ttf */; };
 		796EF9265B46C3334EB725D8 /* libPods-WOC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59F33EF35B9286C922562C17 /* libPods-WOC.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		87AAB3842248E52000CCC971 /* PTS75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87AAB35B2248E51F00CCC971 /* PTS75F.ttf */; };
-		87AAB3852248E52000CCC971 /* PTS55F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87AAB3832248E51F00CCC971 /* PTS55F.ttf */; };
 		989E6C56188A465AA246099A /* libRNSecureKeyStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A79ABC3A73A7446CBA3F0A54 /* libRNSecureKeyStore.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CE9AE5E3B62D41F185F28C6C /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A521CD78E3AB48188B0864BF /* libFastImage.a */; };
@@ -377,8 +375,6 @@
 		823613F66EDA14CE299B9C51 /* libPods-WOCTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WOCTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D26E1EE213FDA61AE7B778 /* libPods-WOC-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WOC-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		87AAB35B2248E51F00CCC971 /* PTS75F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTS75F.ttf; sourceTree = "<group>"; };
-		87AAB3832248E51F00CCC971 /* PTS55F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTS55F.ttf; sourceTree = "<group>"; };
 		91064BB047974784AC572F7C /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		A50CE96DF69B49AFA0EA3422 /* PTS75F.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = PTS75F.ttf; path = ../assets/fonts/PTS75F.ttf; sourceTree = "<group>"; };
 		A521CD78E3AB48188B0864BF /* libFastImage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libFastImage.a; sourceTree = "<group>"; };
@@ -668,8 +664,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				87AAB3832248E51F00CCC971 /* PTS55F.ttf */,
-				87AAB35B2248E51F00CCC971 /* PTS75F.ttf */,
 				13B07FAE1A68108700A75B9A /* WOC */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* WOCTests */,
@@ -1197,9 +1191,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				D34BE4A070994163842857F3 /* PTS55F.ttf in Resources */,
-				87AAB3842248E52000CCC971 /* PTS75F.ttf in Resources */,
 				78B2BF7C881B4CC4AE026681 /* PTS75F.ttf in Resources */,
-				87AAB3852248E52000CCC971 /* PTS55F.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,7 +1475,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.woc.app;
 				PRODUCT_NAME = WOC;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1508,7 +1500,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.woc.app;
 				PRODUCT_NAME = WOC;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
