@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import ResponsiveImage from 'react-native-responsive-image';
 class CustomHeader extends Component {
 
   constructor(props) {
@@ -18,11 +19,11 @@ class CustomHeader extends Component {
                     >
                                       <Image
       
-                                             source={require('../../assets/back-arrow25x25.png')} style={{width: 20,height:20}}
+                                             source={require('../../assets/Back-icon.png')} style={styles.ImageStyle}
                                       />
                         </TouchableOpacity>
                           </View>
-                          <View style={{width: '85%', height: 40, paddingTop: 5}} >
+                          <View style={{width: '85%', height: 40, paddingTop: 5,alignItems: 'center',}} >
                             <Text style={styles.textStyle}>{this.props.headerText}</Text>
       
                         </View>
@@ -41,24 +42,26 @@ const styles = {
     flex: 0,
       justifyContent: 'space-around',
       flexDirection: 'row',
-      paddingTop: 10,
-      height: 60,
+      paddingTop: 8,
+      height: 48,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       elevation: 2,
-      position: 'relative'
+      position: 'relative',
+      backgroundColor:'#e48478',
   },
 
   ImageStyle: {
-     height: 25,
-      width: 25,
+    marginTop:5
 },
 
   textStyle: {
     fontSize: 18,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    alignItems: 'center',
+    //justifyContent: 'center',
+     fontFamily: "PTS75F",
+     color:'#fff'
 
   }
 };

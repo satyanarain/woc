@@ -5,13 +5,14 @@
  * This is page for Request Form Appointment
  */
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
-
+import {AsyncStorage, StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
+import ResponsiveImage from 'react-native-responsive-image';
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
-import ResponsiveImage from 'react-native-responsive-image';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+
 class Login extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
@@ -20,53 +21,42 @@ class Login extends React.Component {
 
         this.state = {
             loaded: false,
-            txtEmail: '',
+            txtEmail: 'ravish_kumar@opiant.in',
             token: "",
             tokenCopyFeedback: "",
             isVisible: true,
             Login: false,
-            password: '',
-            //password: '07/01/1997',
+            password: 'pandey',
+            placeholderPassword:'Password',
+            placeholderEmail:'Password',
+            forgotPassword:'',
+            singUp:'',
+            watchVideo:'',
+            singIn:'',
 
         };
-//this.state = {password:"2016-05-15"}
+
     }
 
-    /***********************************************************/
-    componentDidMount() {
-        //  ServiceClass.SecondClassFunction();
-        // RNSecureKeyStore.set("key1", "value1", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-        //     .then((res) => {
-        //         console.log(res);
-        //     }, (err) => {
-        //         console.log(err);
-        //     })
+
+    componentDidMount  ()  {
 
 
 
-        var that = this;
-          //  alert(DeviceInfo.getDeviceId());
+      //console.log(this.props.lang);
 
-        setTimeout(function () {
+        this.setState({placeholderEmail:this.props.lang.LOGIN_EMAIL_HINT});
+        this.setState({placeholderPassword:this.props.lang.LOGIN_PASSWORD_HINT});
+        this.setState({forgotPassword:this.props.lang.FORGOT_HEADER});
+        this.setState({singUp:this.props.lang.LOGIN_BUTTON_SIGN_UP});
+        this.setState({watchVideo:this.props.lang.LOGIN_BUTTON_SIGN_UP});
+        this.setState({singIn:this.props.lang.LOGIN_BUTTON_SIGN_IN});
 
-            that.HideSplashScreen();
-
-        }, 1000);
-
-        setTimeout(() => {
-            this.setState({Login: true});
-        }, 1000);
     }
-    HideSplashScreen = () => {
 
-        this.setState({
-            isVisible: false
-
-        });
-    }
 
     validate = (text) => {
-    //  debugger
+
           console.log(text);
           let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
           if(reg.test(text) === false)
@@ -81,15 +71,15 @@ class Login extends React.Component {
           }
     }
     clickToRegistration = () =>{
-     Actions.Registration();
+
+
+      Actions.Registration();
     }
-clickToSuggestedCentres=()=>
-{
-  Actions.SuggestedCentres();  
-    
-}
+    clickToForgotPass = () =>{
 
 
+      Actions.ForgotPassword();
+    }
 
     clickToLogin = () => {
       //debugger;
@@ -102,36 +92,32 @@ clickToSuggestedCentres=()=>
 
 
         if (txtEmail === '') {
-            alert('Please enter Email.');
+            alert(this.props.lang.LOGIN_EMAIL_ERROR);
         }   else if (isValid === false) {
-            alert('You have entered an invalid email address!');
+            alert(this.props.lang.LOGIN_EMAIL_VALID_ERROR);
           }
          else if (password === '') {
-          alert('Please enter Password.');
+          alert(this.props.lang.LOGIN_PASSWORD_ERROR);
         } else {
-       //    debugger;
-       // //alert("hi")
+
             this.setState({loaded: true})
-            ServiceClass.loginData(txtEmail, password,'v2/login').then((reData) => {
+            ServiceClass.loginData(txtEmail, password, this.props.selectedLangCode,'login').then((reData) => {
 
-                    this.setState({loaded: false});
-                    let token = reData.data.accessToken;
-                    console.log("accessToken" + token);
-                    RNSecureKeyStore.set("accessToken", token, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-                    .then((res) => {
-                      console.log(res);
-                    }, (err) => {
-                      console.log(err);
-                    });
-                    this.setState({loaded: false});
-                    Actions.Home();
+                if (reData.data.response.httpCode === '200'){
+                  this.props.saveLoginData(reData.data.response.body);
+                      this.setState({loaded: false});
+                }else{
+                  alert('error');
 
-            }).catch((error) => {
-                //debugger;
-                console.log(error.message);
-                  alert('Please enter correct Email ID or Password');
+                }
+
                 this.setState({loaded: false});
-                  //alert(error)
+            }).catch((error) => {
+
+                alert(error.message);
+
+                this.setState({loaded: false});
+
             });
         }
     }
@@ -154,7 +140,6 @@ clickToSuggestedCentres=()=>
 
 
             return (
-              
                     <View style={styles.container}>
 
                         {
@@ -163,9 +148,7 @@ clickToSuggestedCentres=()=>
                                                 style={styles.imgBackground}
                                                 resizeMode='cover'
                                                 source={require('../../assets/background.jpg')}>
-                                                <KeyboardAwareScrollView>
                                                 <View style={styles.container}>
-
                                                     <ResponsiveImage
                                                         source={require('../../assets/logo.jpg')}
                                                         style={{marginBottom: 30, marginTop: 210,height:73,width:159}}/>
@@ -180,7 +163,7 @@ clickToSuggestedCentres=()=>
                                                     <View style={styles.SectionStyle1}>
                                                         <TextInput
                                                             style={{flex: 1, width: 100, fontSize:16}}
-                                                            placeholder="Email Id"
+                                                            placeholder={this.state.placeholderEmail}
                                                             placeholderTextColor="#fff"
                                                             underlineColorAndroid="transparent"
                                                             onChangeText={txtEmail => this.setState({txtEmail})}
@@ -197,10 +180,9 @@ clickToSuggestedCentres=()=>
                                                     <View style={styles.SectionStyle2}>
                                                         <TextInput
                                                             style={{flex: 1, width: 100, fontSize:16}}
-                                                            placeholder="Password"
+                                                            placeholder={this.state.placeholderPassword}
                                                             placeholderTextColor="#fff"
                                                             underlineColorAndroid="transparent"
-                                                            secureTextEntry={true}
                                                             onChangeText={password => this.setState({password})}
                                                             />
                                                     </View>
@@ -209,31 +191,37 @@ clickToSuggestedCentres=()=>
 
 
                                                 {
-                                                  (loaded === true) ? <View style={styles.containerActivety}>
-                                                  <View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
+                                                  (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#A82047" /></View></View> : null
                                                 }
-
-                                                <View style={{justifyContent:'center',alignItems:'center',paddingTop:20}}>
                                                 <TouchableOpacity
                                                   onPress={this.clickToLogin}
                                                 >
-                                                <Image
-                                                         source={require('../../assets/signIn.png')}
-                                                         style={{width:320,marginTop:10}}
-                                                         />
-                                                  </TouchableOpacity>
-                                                  </View>
+                                                <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'white',height:45,marginTop:20}}>
 
+                                                <View style={{flexDirection:'row'}}>
+                                                <Image
+                                                         source={require('../../assets/signInBtn_icon.png')}
+                                                         style={{width:17,height:19,marginRight:10}}
+                                                         />
+
+                                                         <Text  style={{ textAlign:'left',color:'#000',fontWeight:'bold',fontSize:16}}
+                                                               >
+                                                               {this.state.singIn}
+                                                               </Text>
+                                                    </View>
+
+                                                  </View>
+                                                  </TouchableOpacity>
                                                 <View style={{width:'100%',flexDirection:'row',marginTop:20}}>
                                                   <View style={{width:'50%'}}>
                                                   <TouchableOpacity
-                                                        onPress={this.clickToRegistration}
+                                                        onPress={this.clickToForgotPass}
                                                         >
 
 
                                                               <Text  style={{ textAlign:'left',color:'#fff',fontWeight:'bold',fontSize:16}}
                                                                     >
-                                                                    Forgot Password?
+                                                                    {this.state.forgotPassword}
                                                                     </Text>
 
 
@@ -248,7 +236,7 @@ clickToSuggestedCentres=()=>
 
                                                               <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18, textDecorationLine: 'underline'}}
                                                                     >
-                                                                    Sign Up
+                                                                    {this.state.singUp}
                                                                     </Text>
 
 
@@ -257,37 +245,33 @@ clickToSuggestedCentres=()=>
                                                     </View>
 
                                                 </View>
-                                                <View style={{width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
                                                 <TouchableOpacity
                                                         onPress={this.clickToRegistration}
                                                         >
+                                                <View style={{width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
 
-                                                            <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}>
-                                                                    Watch Training Video
+
+
+
+                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
+                                                                    >
+                                                                    {this.state.watchVideo}
                                                                     </Text>
 
-                                                    </TouchableOpacity>
-                                                <TouchableOpacity
-                                                        onPress={this.clickToSuggestedCentres}
-                                                        >
 
-                                                            <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}>
-                                                                    Suggested Centres
-                                                                    </Text>
 
-                                                    </TouchableOpacity>
+
+
                                                     </View>
+                                                      </TouchableOpacity>
                                                 </View>
                                             </View>
- </KeyboardAwareScrollView>
                                         </ImageBackground>
-
-
                     }
 
 
+
                     </View>
-                       
                                                       );
                                                     }
                                                 }
@@ -485,4 +469,10 @@ const styles = StyleSheet.create({
 
 
 });
- export default Login;
+
+function mapStateToProps({ lang, selectedLangCode }){
+    let data =  lang.body[selectedLangCode]
+return { lang: data , selectedLangCode:selectedLangCode };
+}
+
+ export default connect(mapStateToProps,actions) (Login);

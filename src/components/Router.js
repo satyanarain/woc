@@ -5,11 +5,15 @@ import Login from './Login';
 import { DrawerNavigator } from 'react-navigation';
 import Registration from './Registration';
 import UserData from './UserData';
+import Menu from './Menu';
 import LandingScreen from './LandingScreen';
 import SuggestedCentres from './SuggestedCentres';
-
+import Home from './Home';
+import ForgotPassword from './ForgotPassword';
+import { connect } from 'react-redux';
 import { Alert, StatusBar } from 'react-native';
-
+import * as actions from '../../actions';
+import SuggestedCentreDetails from './SuggestedCentreDetails';
 
 class RouterComponent extends Component {
   constructor() {
@@ -23,21 +27,16 @@ class RouterComponent extends Component {
       };
   }
   componentDidMount() {
-    //debugger;
-    UserData.retriveData('accessToken').then((res) => {
-        //console.log(res);
-        if (res === '') {
+      this.props.fetchLang();
+        if (this.props.successData === '') {
             this.setState({ isLogin: false });
         } else {
 
-            //console.log(res);
+          console.log(this.props.successData);
             this.setState({ isLogin: true });
 
+}
 
-        }
-    }, (err) => {
-        //console.log(err);
-    });
   }
 
 
@@ -51,10 +50,14 @@ class RouterComponent extends Component {
       <Scene key='root' >
       <Scene hideNavBar>
        <Scene key='Login' component={Login} title=''  />
-       <Scene key='LandingScreen' component={LandingScreen} title='' initial />
+       <Scene key='LandingScreen' component={LandingScreen} title=''  initial/>
        <Scene key='Registration' component={Registration} title='' />
-       <Scene key='SuggestedCentres' component={SuggestedCentres} title='' />
-       <Scene key='RouterComponent' component={RouterComponent} title='' />
+        <Scene key='RouterComponent' component={RouterComponent} title='' />
+        <Scene key='ForgotPassword' component={ForgotPassword} title='' />
+        <Scene key='SuggestedCentres' component={SuggestedCentres} title='' />
+        <Scene key='SuggestedCentreDetails' component={SuggestedCentreDetails} title='' />
+        <Scene key='Home' component={Home} title='' />
+
      </Scene>
      </Scene>
      </Router>
@@ -74,4 +77,10 @@ const styles = {
      flex: 1,
 },}
 
-export default RouterComponent;
+function getAuthData({auth}){
+
+  console.log(auth);
+  return {successData:auth}
+}
+
+export default connect(getAuthData,actions) (RouterComponent);

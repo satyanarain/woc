@@ -1,25 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- <View style={styles.container}>
-   <TouchableOpacity onPress={this.clickToCall}>
-   <Text style={styles.welcome}>Welcome to React Native Ankleshwar!</Text>
-   </TouchableOpacity>
-   <Text style={styles.instructions}>To get started, edit App.js</Text>
-   <Text style={styles.instructions}>{instructions}</Text>
- </View>
 
-
- */
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import Router from './src/components/Router';
-
-
+import { Provider } from 'react-redux';
+import store from './store';
 export default class App extends Component<Props> {
 
   clickToCall = () => {
@@ -29,7 +14,9 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <Router />
+      <Provider store={store}>
+          <Router />
+      </Provider>
     );
   }
 }

@@ -12,19 +12,60 @@ import CustomHeader from './CustomHeader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNPickerSelect from 'react-native-picker-select';
 import ResponsiveImage from 'react-native-responsive-image';
+
+const sports = [
+    {
+        label: 'Football',
+        value: 'football',
+    },
+    {
+        label: 'Baseball',
+        value: 'baseball',
+    },
+    {
+        label: 'Hockey',
+        value: 'hockey',
+    },
+];
 class SuggestedCentres extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
     constructor(props) {
         super(props);
-
+        this.inputRefs = {
+            firstTextInput: null,
+            favSport0: null,
+            favSport1: null,
+            lastTextInput: null,
+        };
         this.state = {
             loaded: false,
-            
-
+            numbers: [
+                {
+                    label: '1',
+                    value: 1,
+                    color: 'orange',
+                },
+                {
+                    label: '2',
+                    value: 2,
+                    color: 'green',
+                },
+            ],
+            favSport0: undefined,
+            favSport1: undefined,
+            favSport2: undefined,
+            favSport3: undefined,
+            favSport4: 'baseball',
+            favNumber: undefined,
         };
+
 //this.state = {date:"2016-05-15"}
     }
+
+
+
+
 
     /***********************************************************/
     componentDidMount() {
@@ -48,6 +89,17 @@ class SuggestedCentres extends React.Component {
             Login,
             loaded
         } = this.state;
+
+const placeholder = {
+            label: 'Select a sport...',
+            value: null,
+            color: '#9EA0A4',
+        };
+
+
+
+
+
 
     return (
               
@@ -85,35 +137,49 @@ class SuggestedCentres extends React.Component {
                                               </View>
                                               <View style={styles.search}>
                                               <View style={styles.searchText}>
-                                              <TextInput style = {styles.input}
-                                                underlineColorAndroid = "transparent"
-                                                placeholder = "Search by Keyword"
-                                                placeholderTextColor = "#9a73ef"
-                                                autoCapitalize = "none"
-                                                onChangeText = {this.searchText}/>    
-                                              </View>
-                                              <View style={styles.searchImage}>
-                                                   <ResponsiveImage
+                                         <RNPickerSelect
+                    placeholder={{}}
+                    items={sports}
+                    onValueChange={(value) => {
+                        this.setState({
+                            favSport2: value,
+                        });
+                    }}
+                   style={{ ...pickerSelectStyles }}
+              
+                />
+       </View>
+                                  <View style={styles.searchImage}>
+                                         <ResponsiveImage
                                                   source={require('../../assets/downArrow.png')}  initWidth="16" initHeight="16"/>
-                                              </View>
-                                              </View>
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                          </KeyboardAwareScrollView>
+                                         </View>
+                                         </View>
+                                  </KeyboardAwareScrollView>
                                 </View>
                               </ImageBackground>
-                                </View>
+                             </View>
                            </SafeAreaView>
                       );
                 }
     }
 
 
-
+const pickerSelectStyles = StyleSheet.create({
+    inputAndroid: {
+      //  fontSize: 16,
+        paddingTop:0,
+        margin:0,
+        height:30,
+        paddingHorizontal: 10,
+        paddingBottom:0,
+        //borderWidth: 1,
+        //borderColor: 'gray',
+        //borderRadius: 4,
+        paddingHorizontal: 10,
+        backgroundColor:'#ccc',
+        color: 'black',
+    },
+});
 const styles = StyleSheet.create({
 
  safeArea: {
@@ -132,10 +198,13 @@ const styles = StyleSheet.create({
 
     },
  input: {
-      margin: 15,
-      height: 20,
-      borderColor: '#ccc',
-     borderRadius:5
+    backgroundColor:'#ccc',
+    color:'#000',
+    height:30,
+    padding:0,
+    margin:0,
+    borderColor:"#fff",
+   borderBottomWidth:1,
    },
  searchTop: {
       width:'100%',
@@ -149,19 +218,17 @@ const styles = StyleSheet.create({
      },
  search: {
       width:'100%',
-      backgroundColor:'#ccc',
       flexDirection:'row',
-      height:30,
-      
-       
-     },
+      },
     searchText: {
        width:'90%',
+      
    },
  searchImage: {
       width:'10%',
       paddingTop:7,
       paddingLeft:10,
+      backgroundColor:'#ccc',
    },
 
   logo: {
