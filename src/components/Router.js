@@ -8,16 +8,18 @@ import UserData from './UserData';
 import Menu from './Menu';
 import LandingScreen from './LandingScreen';
 import SuggestedCentres from './SuggestedCentres';
-import Home from './Home';
+
 import ForgotPassword from './ForgotPassword';
 import { connect } from 'react-redux';
 import { Alert, StatusBar } from 'react-native';
 import * as actions from '../../actions';
 import SuggestedCentreDetails from './SuggestedCentreDetails';
 import Home from './Home';
-import SuggestedCentres from './SuggestedCentres';
+import Feedback from './Feedback';
+import TrainigJobStatus from './TrainigJobStatus';
+import Scolarship from './Scolarship';
+import Profile from './Profile';
 import TraningList from './TraningList';
-
 
 class RouterComponent extends Component {
   constructor() {
@@ -31,32 +33,53 @@ class RouterComponent extends Component {
       };
   }
   componentWillMount() {
+      
       this.props.fetchLang();
-      this.props.getLanguage();
-     AsyncStorage.getItem('logindata').then((response) =>{
-       if (response !== null){
-         //debugger;
-         this.setState({ isLogin: true });
-        let value = JSON.parse(response);
-         console.log(value);
-         dispatch({type:LOGIN_SUCCESS, payload:value});
+     this.props.getLanguage();
+     this.props.getLoginData();
+    AsyncStorage.getItem('logindata').then((response) =>{
+     //   debugger;
+      if (response === '' || response === null){
+        //debugger;
+     this.setState({ isLogin: false });
 
 
-       }else{
-           this.setState({ isLogin: false });
-       }
+      }else{
 
-      })
+          this.setState({ isLogin: true });
+             let value = JSON.parse(response);
+          console.log(value);
+          dispatch({type:LOGIN_SUCCESS, payload:value});
+      }
+
+     })
+      
+      
+      
+      
+      
+//      this.props.fetchLang();
+//      this.props.getLanguage();
+//      this.props.getLoginData();
+//     AsyncStorage.getItem('logindata').then((response) =>{
+//       if (response !== null){
+//         //debugger;
+//         this.setState({ isLogin: true });
+//        let value = JSON.parse(response);
+//         console.log(value);
+//         dispatch({type:LOGIN_SUCCESS, payload:value});
+//
+//
+//       }else{
+//           this.setState({ isLogin: false });
+//       }
+//
+//      })
 
 
   }
-
-
-
-
-
-
-    render() {
+  
+ render() {
       const {
           isLogin
       } = this.state;
@@ -73,14 +96,15 @@ class RouterComponent extends Component {
        <Scene key='Registration' component={Registration} title='' />
         <Scene key='RouterComponent' component={RouterComponent} title='' />
         <Scene key='ForgotPassword' component={ForgotPassword} title='' />
-
         <Scene key='SuggestedCentres' component={SuggestedCentres} title='' />
         <Scene key='SuggestedCentreDetails' component={SuggestedCentreDetails} title='' />
         <Scene key='Home' component={Home} title='' />
+        <Scene key='Profile' component={Profile} title='' />
+        <Scene key='Feedback' component={Feedback} title='' />
+        <Scene key='TrainigJobStatus' component={TrainigJobStatus} title='' />
+        <Scene key='Scolarship' component={Scolarship} title='' />
         <Scene key='TraningList' component={TraningList} title='' />
-
-
-     </Scene>
+      </Scene>
      </Scene>
      </Router>
 

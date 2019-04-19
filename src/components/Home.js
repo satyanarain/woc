@@ -5,23 +5,29 @@
  * This is Home Screen
  */
 import React from 'react';
-import { StyleSheet, TextInput,KeyboardAvoidingView,SafeAreaView, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar,Keyboard,Animated,ScrollView } from 'react-native';
+import { StyleSheet, TextInput,Linking,KeyboardAvoidingView,SafeAreaView, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar,Keyboard,Animated,ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
 import CustomHeader from './CustomHeader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNPickerSelect from 'react-native-picker-select';
-import { connect } from 'react-redux';
 import ResponsiveImage from 'react-native-responsive-image';
+import { SectionGrid } from 'react-native-super-grid';
 import * as actions from '../../actions';
+import { connect } from 'react-redux';
+import FastImage from 'react-native-fast-image'
+import HTML from 'react-native-render-html';
+import HTMLView from 'react-native-htmlview';
+import call from 'react-native-phone-call';
+import email from 'react-native-email';
+
 
 class Home extends React.Component {
-    static navigationOptions = {title: '', header: null, navigationBarHidden: true};
-
-    constructor(props) {
+constructor(props) {
         super(props);
         this.state = {
             loaded: false,
+            arrSuggeationCenter:[],
          };
 
     }
@@ -30,8 +36,6 @@ class Home extends React.Component {
 
     }
 
-<<<<<<< HEAD
-=======
 
     clickToSuggestedCenterViewMore = () => {
       Actions.SuggestedCentres();
@@ -40,18 +44,89 @@ class Home extends React.Component {
       Actions.TraningList();
     }
 
+clickToFeedBack=()=>
+{
+    
+ Actions.Feedback();   
+    
+}
+clickToScolarship=()=>
+{
+    
+ Actions.Scolarship();   
+    
+}
+clickToJob=()=>
+{
+    
+ Actions.TrainigJobStatus();   
+    
+}
+
+
+clickToProfile=()=>
+{
+  Actions.Profile();   
+}
 
 
 
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
+componentWillMount(){
+
+  this.setState({loaded: true})
+
+  ServiceClass.languageData('get-training-list').then((reData) => {
+
+
+    console.log(reData.data.response.body);
+    this.setState({arrSuggeationCenter:reData.data.response.body});
+    this.setState({searchData:reData.data.response.body});
+
+this.setState({loaded: false});
+
+}).catch((error) => {
+
+  this.setState({loaded: false});
+  Alert.alert(error);
+});
+
+
+}
+
+
     /*
      @handleKeyDown: this function use to close the keyboard on return click.
-                   */
+    
+     */
     handleKeyDown = (e) => {
         if (e.nativeEvent.key == "Enter") {
             Keyboard.dismiss();
         }
     }
+
+ renderViewAll() {
+        return this.state.arrSuggeationCenter.map((array, index) =>
+                                    <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore} style={styles.suggestedImg}>
+                                   
+                                     <Image source={{uri: array.logo}}  style={styles.imgRadius}/>
+                                      
+                                       {/* <Text style={styles.textColorBlack}>array.title</Text> */}
+                                  </TouchableOpacity>
+             );
+        }
+        
+ renderView() {
+        return this.state.arrSuggeationCenter.map((array, index) =>
+                                 <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore} style={styles.suggestedImg}>
+                                   
+                                       <Image source={{uri: array.logo}}  style={styles.imgRadius}/>
+                                       {/* <Text style={styles.textColorBlack}>{array.title}</Text> */}
+                                 
+                                    </TouchableOpacity>
+                                   
+            );
+        }
+
 
    render() {
 
@@ -60,6 +135,8 @@ class Home extends React.Component {
             Login,
             loaded
         } = this.state;
+        
+     
 
 const placeholder = {
             label: 'Select a sport...',
@@ -67,109 +144,75 @@ const placeholder = {
             color: '#9EA0A4',
         };
 
- return (
-         <SafeAreaView style={styles.safeArea}>
-                   <View style={styles.MainContainer}>
-                       <View style={styles.subcontainer}>
-                           <KeyboardAwareScrollView>
-                               <View style={styles.mainRow}>
-                                   <View style={styles.rowLeft}>
+return (
+<SafeAreaView style={styles.safeArea}>
+                            <View style={styles.subcontainer}>
+                              <View style={styles.mainRow}>
+                                   <View style={styles.rowLeft1}>
                                        <ResponsiveImage  source={require('../../assets/home-logo.png')}   initWidth="147" initHeight="67"/>
                                    </View>
-                                   <View style={styles.rowRight}>
-                                       <TouchableOpacity
+                                   <View style={styles.rowRight1}>
+                                         <TouchableOpacity
                                            style={styles.button}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
-                                           onPress={this.clickToDonate}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
-                                           >
-                                           <Text style={styles.textColor}>
-                                           <ResponsiveImage source={require('../../assets/donate.png')}  initWidth="16" initHeight="16"/>{this.props.lang.MENU_DONATE}</Text>
+                                           onPress={ ()=>{ Linking.openURL('https://www.winovercancer.net/donate/')}} >
+                                           <View style={{flexDirection:'row'}}>
+                                            <View><ResponsiveImage source={require('../../assets/donate.png')}  initWidth="25" initHeight="23" /></View>
+                                           <View><Text style={styles.textColor}> {this.props.lang.MENU_DONATE}</Text></View>
+                                           </View>
                                        </TouchableOpacity>
 
                                    </View>
+                                </View>
                                </View>
                                { /*******************************************Suggested Centres start************************/}
+                               <KeyboardAwareScrollView>
+                              <View style={styles.subcontainer}>
                                <View style={styles.mainRow}>
                                    <View style={styles.rowLeft}>
                                        <Text style={styles.textColorBold}>{this.props.lang.MENU_SUGGESSTION}</Text>
                                    </View>
                                    <View style={styles.rowRight}>
-<<<<<<< HEAD
-                                       <TouchableOpacity onPress={this.onPress}
-=======
                                        <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                                          >
-                                           <Text style={styles.textColorLink}>View More</Text>
+                                           <Text style={styles.textColorLink}></Text>
                                        </TouchableOpacity>
 
                                    </View>
                                </View>
-                               { /***********************images********************************************/}
+                             {
+                                                                    (loaded === true) ? <View style={styles.containerActivety}><View style={styles.loader}><ActivityIndicator style={styles.loaderSub} size="large"  /></View></View> : null
+                                            }
+                               
                                <View style={styles.spaceBetween}>
-                                   <View style={styles.suggestedImg}>
-                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
-                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                                   <View style={styles.suggestedImg}>
-                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
-                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                                   <View style={styles.suggestedImg}>
-                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
-                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                               </View>
+                                   {this.renderView()}
+                                  </View>
+                            
                                 { /**********************************Suggested Centres end*********************************/}
-
-                               { /*******************************************Training Centres start************************/}
+                                { /*******************************************Training Centres start************************/}
                                <View style={styles.mainRowSub}>
                                    <View style={styles.rowLeft}>
                                        <Text style={styles.textColorBold}>{this.props.lang.MENU_TRAINING}</Text>
                                    </View>
                                    <View style={styles.rowRight}>
-<<<<<<< HEAD
-                                       <TouchableOpacity onPress={this.onPress}
-=======
                                        <TouchableOpacity onPress={this.clickToTraningViewMore}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                                          >
-                                           <Text style={styles.textColorLink}>View More</Text>
+                                           <Text style={styles.textColorLink}></Text>
                                        </TouchableOpacity>
 
                                    </View>
                                </View>
                                { /***********************images********************************************/}
-                               <View style={styles.spaceBetween}>
-                                   <View style={styles.suggestedImg}>
-                                    <Image source={require('../../assets/sc_box_img1.png')} style={styles.imgRadius}/>
-                                      <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                                   <View style={styles.suggestedImg}>
-                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
-                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                                   <View style={styles.suggestedImg}>
-                                       <Image source={require('../../assets/sc_box_img1.png')}  style={styles.imgRadius}/>
-                                       <Text style={styles.textColorBlack}>Tally Arena</Text>
-                                   </View>
-                               </View>
+                                 <View style={styles.spaceBetween}>
+                                  { this.renderViewAll()}
+                                </View>
                                 { /**********************************Training Centres end*********************************/}
 
                                { /***********************Profile********************************************/}
                                <View style={styles.spaceBetweenProfile}>
                                    <View style={styles.suggestedImgLeft}>
-
-                                    <TouchableOpacity
+                                     <TouchableOpacity
                                            style={styles.buttonProfile}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToProfile}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <ResponsiveImage source={require('../../assets/profile.png')}  initWidth="29" initHeight="27"/>
                                            <Text style={styles.textColor}> {this.props.lang.MENU_PROFILE}</Text>
@@ -178,25 +221,23 @@ const placeholder = {
                                       <View style={styles.suggestedImgRight}>
                                        <TouchableOpacity
                                            style={styles.buttonFeedBack}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToFeedBack}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
-                                           <Text style={styles.textColor}>
-                                           <ResponsiveImage source={require('../../assets/feedbackForm.png')}  initWidth="25" initHeight="26"/> {this.props.lang.MENU_FEEDBACK}</Text>
+                                           <View style={{flexDirection:'row',marginTop:2}}>
+                                            <View><ResponsiveImage source={require('../../assets/feedbackForm.png')}  initWidth="25" initHeight="26" /></View>
+                                           <View style={styles.textColorTop}><Text style={styles.textColor}>   {this.props.lang.MENU_FEEDBACK}</Text></View>
+                                           </View>
+
                                        </TouchableOpacity>
                                        <TouchableOpacity
                                            style={styles.buttonTrain}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToJob}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
-                                           <Text style={styles.textColor}>
-                                           <ResponsiveImage source={require('../../assets/trainingJobStatus.png')}  initWidth="26" initHeight="24"/> {this.props.lang.MENU_JOB}</Text>
+                                           <View style={{flexDirection:'row',marginTop:2}}>
+                                            <View><ResponsiveImage source={require('../../assets/trainingJobStatus.png')}  initWidth="26" initHeight="24" /></View>
+                                           <View style={styles.textColorTop}><Text style={styles.textColor}>   {this.props.lang.MENU_JOB}</Text></View>
+                                           </View>
+
                                        </TouchableOpacity>
                                    </View>
                                   </View>
@@ -208,81 +249,83 @@ const placeholder = {
 
                                     <TouchableOpacity
                                            style={styles.buttonScholarship}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToScolarship}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
                                            <ResponsiveImage source={require('../../assets/Scholarship.png')}  initWidth="29" initHeight="27"/>
-                                           <Text style={styles.textColor}> {this.props.lang.MENU_SCHOLARSHIP}</Text>
+                                           <Text style={styles.textColorCenter}> {this.props.lang.MENU_SCHOLARSHIP}</Text>
                                        </TouchableOpacity>
                                     </View>
                                       <View style={styles.scholarshipRight}>
                                        <TouchableOpacity
                                            style={styles.buttonItPartner}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToITPartner}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
-                                           <Text style={styles.textColor}>
-                                           <ResponsiveImage source={require('../../assets/ITPartner.png')}  initWidth="30" initHeight="22" style={{marginRight:10}}/> {this.props.lang.MENU_IT_PARTNER}</Text>
+                                           <View style={{flexDirection:'row',marginTop:3}}>
+                                            <View><ResponsiveImage source={require('../../assets/ITPartner.png')}  initWidth="30" initHeight="22" /></View>
+                                           <View style={styles.textColorTop}><Text style={styles.textColor}>   {this.props.lang.MENU_IT_PARTNER}</Text></View>
+                                           </View>
+
                                        </TouchableOpacity>
                                        <TouchableOpacity
                                            style={styles.aboutUs}
-<<<<<<< HEAD
-                                           onPress={this.onPress}
-=======
                                            onPress={this.clickToAboutUs}
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
                                            >
-                                           <Text style={styles.textColor}>
-                                           <ResponsiveImage source={require('../../assets/aboutUs.png')}  initWidth="25" initHeight="25"/>  {this.props.lang.MENU_ABOUT_US}</Text>
-                                       </TouchableOpacity>
+                                           <View style={{flexDirection:'row',marginTop:4}}>
+                                            <View><ResponsiveImage source={require('../../assets/aboutUs.png')}  initWidth="25" initHeight="25" /></View>
+                                           <View style={styles.textColorTop}><Text style={styles.textColor}>   {this.props.lang.MENU_ABOUT_US}</Text></View>
+                                           </View>
+                                        </TouchableOpacity>
                                    </View>
                                   </View>
                                   <View style={{height:10}}></View>
-
+                                     </View>
                                 { /***********************Profile********************************************/}
                                 </KeyboardAwareScrollView>
-                     </View>
-                    </View>
-                </SafeAreaView>
+</SafeAreaView>
                       );
                 }
     }
 
-
-
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#0095d3',
-    padding: 12,
+    padding: 8,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
+    width:'100%'
   },
+  
+     containerActivety: {
+
+        backgroundColor: 'transparent',
+        height: '100%',
+        width: '100%',
+        zIndex: 10000000,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loader:{
+  width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10 
+},
+   
+loaderSub:{
+  color:"#1A44F2"
+}, 
+  
+  
   buttonFeedBack: {
     backgroundColor: '#0095d3',
     paddingBottom: 10,
     paddingTop: 5,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     paddingLeft: 10,
-    marginBottom:5,
+    marginBottom:10,
   },
   buttonItPartner: {
     backgroundColor: '#1262a1',
@@ -290,14 +333,10 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     paddingLeft: 10,
-    marginBottom:5,
+    marginBottom:13,
   },
   buttonTrain: {
     backgroundColor: '#a5409f',
@@ -306,26 +345,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
     marginBottom:0,
   },
   aboutUs: {
     backgroundColor: '#f23c8b',
-    paddingBottom: 10,
+    paddingBottom:6,
     paddingTop: 5,
     paddingLeft: 10,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:5,
     marginBottom:0,
   },
@@ -334,15 +365,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
     marginBottom:0,
     height:100,
-    width:100,
+    width:125,
     textAlign:'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -352,42 +379,31 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius:5,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:0,
-
     height:100,
-    width:100,
-   textAlign:'center',
-   justifyContent: 'center',
+    width:125,
+    textAlign:'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
     buttonBottom: {
-     backgroundColor: '#0095d3',
+    backgroundColor: '#0095d3',
     padding: 10,
     borderRadius:10,
     color:'#fff',
-<<<<<<< HEAD
-    fontFamily: "PTS75F",
-=======
     fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     marginTop:8,
   },
 
-
-
  safeArea: {
     flex: 1,
-
-  },
+     backgroundColor: '#fff',
+},
  imgRadius: {
-   borderRadius:10,borderWidth:1,height: 100, width: 100,
-
+ borderRadius:10,borderWidth:1,height: 100, width: 100,
+  backgroundColor: '#000',
   },
  spaceBetween: {
     flexDirection: 'row', justifyContent: 'space-between'
@@ -401,139 +417,41 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#ddd',
     padding:10,
-<<<<<<< HEAD
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-=======
     shadowColor: '#ccc',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     elevation: 1,
     width:'32%'
  },
  suggestedImgLeft: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ddd',
-    padding:10,
-<<<<<<< HEAD
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    width:'31%',
-    fontFamily: "PTS75F",
-=======
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 1,
-    width:'31%',
-    fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
-
+   width:'35%',
  },
  scholarshipLeft: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ddd',
-    padding:10,
-<<<<<<< HEAD
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    width:'31%',
-    fontFamily: "PTS75F",
-=======
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 1,
-    width:'31%',
-    fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
-
- },
+   width:'35%',
+},
  suggestedImgRight: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ddd',
-    padding:10,
-<<<<<<< HEAD
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    width:'67%',
-    fontFamily: "PTS75F",
-=======
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 1,
-    width:'67%',
-    fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
+  
+    width:'65%',
+ 
  },
  scholarshipRight: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ddd',
-    padding:10,
-<<<<<<< HEAD
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    width:'67%',
-    height:120,
-    fontFamily: "PTS75F",
-=======
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 1,
-    width:'67%',
-    height:120,
-    fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
- },
+    width:'65%',
+},
 
    textColorBlack: {
       color:'#471e24',
-<<<<<<< HEAD
-       fontFamily: "PTS75F",
-=======
        fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
        fontSize:14,
        paddingTop:10,
        textAlign:'center'
    },
 
-
   MainContainer:
    {
      flex: 1,
       backgroundColor: '#fff',
-<<<<<<< HEAD
-      fontFamily: "PTS75F",
-=======
       fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
 
    },
   mainRow: {
@@ -542,11 +460,7 @@ const styles = StyleSheet.create({
        borderBottomWidth:1,
        borderColor:"#fff",
        paddingBottom:5,
-<<<<<<< HEAD
-       fontFamily: "PTS75F",
-=======
        fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
      },
   mainRowSub: {
       width:'100%',
@@ -556,57 +470,55 @@ const styles = StyleSheet.create({
        paddingBottom:5,
        // backgroundColor: '#0f0',
         paddingTop:20,
-<<<<<<< HEAD
-        fontFamily: "PTS75F",
-=======
         fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
      },
-
-    rowLeft: {
-       width:'70%',
-<<<<<<< HEAD
-       fontFamily: "PTS75F",
-=======
-       fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
-
-   },
-    textColor: {
+ textColor: {
        color:'#fff',
-<<<<<<< HEAD
-     fontFamily: "PTS75F",
-   },
-    textColorBold: {
-       color:'#471e24',
-      fontFamily: "PTS75F",
-=======
      fontFamily: "Helvetica",
+   },
+    textColorCenter: {
+    color:'#fff',
+    fontFamily: "Helvetica",
+    textAlign:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    },
+    textColorTop: {
+      marginTop:3
    },
     textColorBold: {
        color:'#471e24',
       fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
       fontSize:16,
    },
     textColorLink: {
        color:'#75364e',
-<<<<<<< HEAD
-       fontFamily: "PTS75F",
-=======
        fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
        fontSize:14,
+   },
+   
+     rowLeft: {
+       width:'70%',
+       fontFamily: "Helvetica",
+
    },
  rowRight: {
       width:'30%',
       paddingTop:7,
       paddingLeft:10,
-<<<<<<< HEAD
-      fontFamily: "PTS75F",
-=======
       fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
+
+   },
+     rowLeft1: {
+       width:'67%',
+       fontFamily: "Helvetica",
+
+   },
+ rowRight1: {
+      width:'33%',
+      paddingTop:7,
+      paddingLeft:10,
+      fontFamily: "Helvetica",
 
    },
 
@@ -614,21 +526,15 @@ const styles = StyleSheet.create({
        width:'95%',
        marginTop: 10,
         marginLeft: 10,
-<<<<<<< HEAD
-        fontFamily: "PTS75F",
-=======
         fontFamily: "Helvetica",
->>>>>>> 74831b59cd6a3f20e2c20dc4ec4957dca2e799ea
     },
 });
+
+
 function mapStateToProps({ lang, selectedLangCode }){
- debugger;
-
-let data =  lang.body[selectedLangCode]
-console.log(data);
-
-  return {
-   lang:data
-  };
+    //debugger;
+    let data =  lang.body[selectedLangCode]
+return { lang: data , selectedLangCode:selectedLangCode };
 }
- export default connect(mapStateToProps)  (Home);
+
+export default connect(mapStateToProps,actions) (Home);

@@ -19,3 +19,15 @@ if (value !== null){
 
 
 };
+
+export const getLoginData = () => async (dispatch) => {
+
+ let value = await AsyncStorage.getItem('logindata');
+ if (value !== null){
+     value = JSON.parse(value);
+     console.log(value);
+     dispatch({type:LOGIN_SUCCESS, payload:value});
+
+ }
+
+}

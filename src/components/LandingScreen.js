@@ -17,52 +17,51 @@ import UserData from './UserData';
 
 
 class LandingScreen extends React.Component {
-    static navigationOptions = {title: '', header: null, navigationBarHidden: true};
+   
 
     constructor(props) {
         super(props);
         this.inputRefs = {};
         this.state = {
             loaded: false,
-            arrLanguage: [],
-            SelectedLanguage:'hi',
-
+            arrLanguage: [
+               {label: "English", value: "en"},
+ {label: "தமிழ்", value: "ta"},
+ {label: "हिंदी", value: "hi"},
+ {label: "मराठी", value: "mr"},
+ {label: "ଓଡ଼ିଆ", value: "or"},
+ {label: "ਪੰਜਾਬੀ", value: "pu"},
+                
+            ],
+            SelectedLanguage:'',
 
         };
 
     }
-clickSuggestedCentres=()=>
-{
-  Actions.SuggestedCentres();
-}
-clickToHome=()=>
-{
-  Actions.Home();
-}
 
+ componentWillMount(){
 
-
-
-    componentWillMount(){
-
-      this.setState({loaded: true})
-
-  ServiceClass.languageData('get-language-list').then((reData) => {
-      for (var item in reData.data.response.body) {
-
-                    console.log(reData.data.response.body[item].name);
-                    this.state.arrLanguage.push({
-                        label: reData.data.response.body[item].name,
-                        value: reData.data.response.body[item].code
-                    })
-                }
-
-
-  }).catch((error) => {
-
-      this.setState({loaded: false});
-      Alert.alert(error);
-  });
+//      this.setState({loaded: true})
+//alert("erere");
+//
+//  ServiceClass.languageData('get-language-list').then((reData) => {
+//   debugger;
+//console.log(reData.data.response.body);
+//      for (var item in reData.data.response.body) {
+//
+//                    console.log(reData.data.response.body[item].name);
+//                    this.state.arrLanguage.push({
+//                        label: reData.data.response.body[item].name,
+//                        value: reData.data.response.body[item].code
+//                    })
+//                }
+//
+//
+//  }).catch((error) => {
+//
+//      this.setState({loaded: false});
+//      Alert.alert(error);
+//  });
     }
 
 
@@ -116,8 +115,12 @@ clickToHome=()=>
     clickToContinue = async () => {
       if (this.state.SelectedLanguage == ''){
         alert('Please select a language');
-      }else{
-
+      } else if(this.props.isChange === true){
+          
+      this.props.saveLanguage(this.state.SelectedLanguage);
+       Actions.Home();
+      }
+      else {
           this.props.saveLanguage(this.state.SelectedLanguage);
           Actions.Login();
       }
@@ -146,22 +149,22 @@ clickToHome=()=>
             return (
                     <View style={styles.container}>
 
-
-
-                                            <ImageBackground
+                                       <ImageBackground
                                                 style={styles.imgBackground}
                                                 resizeMode='cover'
                                                 source={require('../../assets/background.jpg')}>
                                                 <View style={{justifyContent:'center',alignItems:'center',marginBottom: 30, marginTop: 210}}>
-                                                <ResponsiveImage
-                                                    source={require('../../assets/logo.jpg')}
-                                                    style={{height:73,width:159}}/>
+                                                
+                <ResponsiveImage
+                source={require('../../assets/logo.png')}
+                initWidth="164" initHeight="91" style={styles.logo}/>
+                                                        
                                             </View>
                                       <View style={{justifyContent:'center',alignItems:'center',padding:25}}>
-                                      <RNPickerSelect
+                  <RNPickerSelect
                   placeholder={{
                       label: 'Choose Language',
-                      value: null,
+                      value: 'A',
                   }}
                   placeholderTextColor='white'
                   items={this.state.arrLanguage}
@@ -170,7 +173,6 @@ clickToHome=()=>
                           SelectedLanguage: value,
                       });
                   }}
-
                   style={{ ...pickerSelectStyles }}
                   value={this.state.SelectedLanguage}
                   ref={(el) => {
@@ -189,8 +191,7 @@ clickToHome=()=>
                           </TouchableOpacity>
 
                       </View>
-                                        </ImageBackground>
-
+                     </ImageBackground>
 
                     {
                               (this.state.isVisible === true) ? Splash_Screen : null
@@ -199,24 +200,7 @@ clickToHome=()=>
 
                         barStyle="light-content"
                         />
-
-   <View style={{width:'100%',flexDirection:'row',marginTop:1,justifyContent:'center',alignItems:'center'}}>
-
-                                             <TouchableOpacity
-                                                  onPress={this.clickSuggestedCentres}
-                                                  >
-                                                     <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:16}}>
-                                                           Suggested Centres
-                                                        </Text>
-                                                </TouchableOpacity>
-                                            </View>
-                
-                    </View>
-
-
-
-
-
+                  </View>
 
                                                       );
                                                     }
@@ -425,7 +409,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    logo: {
+
+        marginTop: 30,
+        }
 
 
 });

@@ -11,9 +11,9 @@ import { Actions } from 'react-native-router-flux';
 import ServiceClass from './ServiceClass';
 import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
 import { connect } from 'react-redux';
-
+import CustomHeader from './CustomHeader';
 class ForgotPassword extends React.Component {
-    static navigationOptions = {title: '', header: null, navigationBarHidden: true};
+   
 
     constructor(props) {
         super(props);
@@ -129,6 +129,10 @@ class ForgotPassword extends React.Component {
 
             return (
                     <View style={styles.container}>
+            <CustomHeader
+              headerText={this.props.lang.LOGIN_FORGOT_PASSWORD}
+
+              />
 
                         {
 
@@ -137,9 +141,11 @@ class ForgotPassword extends React.Component {
                                                 resizeMode='cover'
                                                 source={require('../../assets/background.jpg')}>
                                                 <View style={styles.container}>
+                                                
                                                     <ResponsiveImage
-                                                        source={require('../../assets/logo.jpg')}
-                                                        style={{marginBottom: 30, marginTop: 210,height:73,width:159}}/>
+                source={require('../../assets/logo.png')}
+                initWidth="164" initHeight="91" style={styles.logo}/>
+                                                      
                                                     <View style={{width:320}}>
                                                     <View style={{flexDirection:'row',width:'100%',  borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,marginBottom:15}}>
 
@@ -165,10 +171,12 @@ class ForgotPassword extends React.Component {
                                                 {
                                                   (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#1A44F2" /></View></View> : null
                                                 }
-                                                <TouchableOpacity
+                                                
+                                                
+                       {/*<TouchableOpacity
                                                   onPress={this.clickToLogin}
                                                 >
-                                                <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'white',height:45,marginTop:20}}>
+                                                <View style={{justifyContent:'center',backgroundColor:'white',height:45,marginTop:20}}>
 
                                                 <View style={{flexDirection:'row'}}>
                                                 <Image
@@ -176,23 +184,46 @@ class ForgotPassword extends React.Component {
                                                          style={{width:17,height:19,marginRight:10}}
                                                          />
 
-                                                         <Text  style={{ textAlign:'left',color:'#000',fontWeight:'bold',fontSize:16}}
+                                                         <Text  style={{ textAlign:'center',color:'#000',fontWeight:'bold',fontSize:16,width:'30%'}}
                                                                >
                                                                {this.props.lang.FORGOT_BUTTON_OK}
                                                                </Text>
                                                     </View>
 
                                                   </View>
-</TouchableOpacity>
+                          </TouchableOpacity>*/}
+                                        
+                               <TouchableOpacity
+                     onPress={this.clickToLogin}
+                    style={styles.buttonHeading}
+                    >
+                    <View style={styles.signUp}>
+                       
+                            <Image
+                                source={require('../../assets/signInBtn_icon.png')} style={styles.signButton}
+                                />
+                             <Text style={styles.textHeadingImage}>
+                            {this.props.lang.FORGOT_BUTTON_OK}
+                            </Text>
+                   </View>
+                </TouchableOpacity>         
+                                        
+                                        
+                                        
+                                        
+                                        
+                          
+                          
+                          
 <TouchableOpacity
         onPress={this.clickToCancle}
         >
-                                                <View style={{width:'100%',justifyContent:'center',alignItems:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
+                                                <View style={{width:'100%',justifyContent:'center',backgroundColor:'#FFFFFF10',height:50,marginTop:20}}>
 
 
 
 
-                                                              <Text  style={{ textAlign:'right',color:'#fff',fontWeight:'bold',fontSize:18,}}
+                                                              <Text  style={{ textAlign:'center',color:'#fff',fontWeight:'bold',fontSize:18,width:'100%'}}
                                                                     >
                                                                     {this.props.lang.FORGOT_BUTTON_CANCEL}
                                                                     </Text>
@@ -229,6 +260,25 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
     },
+    
+     buttonHeading: {
+         flexDirection:'row',width:'100%', justifyContent: 'center',alignItems: 'center'
+        },
+        signUp: {
+
+        justifyContent:'center', alignItems:'center', backgroundColor:'white', height:45, marginTop:20,  width:'100%', flexDirection:'row'
+
+        },
+         textHeadingImage: {
+
+        color:'#000', fontWeight:'bold', fontSize:16,width:'20%'
+
+        },
+        signButton:{width:17, height:19, marginRight:10},
+    
+    
+    
+    
     MainContainer:
             {
                 flex: 1,
@@ -404,8 +454,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+ logo: {
 
+        marginTop: 30,
+        },
 
 });
 

@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import FastImage from 'react-native-fast-image'
 
 class TraningList extends React.Component {
-    static navigationOptions = {title: '', header: null, navigationBarHidden: true};
+   
 
     constructor(props) {
         super(props);
@@ -156,11 +156,8 @@ searchSubmit = () =>{
                                          <ResponsiveImage
                                                   source={require('../../assets/downArrow.png')}  initWidth="16" initHeight="16"/>
                                          </View>
-                                         </View>
+                                       
 
-
-
-                                </View>
                                 {
                                   (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#A82047" /></View></View> : null
                                 }
@@ -233,6 +230,7 @@ searchSubmit = () =>{
                               </View>
                               </KeyboardAwareScrollView>
                              </View>
+                            
                            </SafeAreaView>
                       );
                 }
