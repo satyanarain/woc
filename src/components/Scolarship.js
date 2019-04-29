@@ -178,7 +178,8 @@ class Scolarship extends React.Component {
                                                 <ResponsiveImage
                                                   source={require('../../assets/logo.png')}
                                                    initWidth="164" initHeight="91" style={styles.logo}/>
-                                                    <KeyboardAwareScrollView>
+                                                   <View style={{height:600}}>
+                                                    <ScrollView>
                                                 <View style={styles.containerSub}>
                                                 { /********************************************/}
                                                  <View style={styles.mainRow}>
@@ -390,7 +391,8 @@ class Scolarship extends React.Component {
                                               </View>
                                               </View>
                                          
-                                            </KeyboardAwareScrollView>
+                                            </ScrollView>
+                                            </View>
                                         </View>
                                     </ImageBackground>
   

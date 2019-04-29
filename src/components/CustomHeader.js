@@ -12,10 +12,11 @@ class CustomHeader extends Component {
  render() {
       return (
                 <View style={styles.containerView}>
-                    <View style={{width: '15%',padding:10,paddingLeft:20}}>
+                    <View style={{width: '20%',padding:0}}>
                     <TouchableOpacity
                       onPress={() => Actions.pop()}
-                      title=""
+                   style={{width:120,paddingLeft:20,height: 48,}}
+                      
                     >
                                       <Image
       
@@ -23,7 +24,7 @@ class CustomHeader extends Component {
                                       />
                         </TouchableOpacity>
                           </View>
-                          <View style={{width: '85%', height: 40, paddingTop: 5,paddingRight: 50,alignItems: 'center',}} >
+                          <View style={{width: '80%', height: 40, paddingTop: 5,paddingRight: 50,alignItems: 'center',}} >
                             <Text style={styles.textStyle}>{this.props.headerText}</Text>
       
                         </View>
@@ -42,7 +43,7 @@ const styles = {
     flex: 0,
       justifyContent: 'space-around',
       flexDirection: 'row',
-      paddingTop: 8,
+     
       height: 48,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
@@ -54,7 +55,8 @@ const styles = {
 
   ImageStyle: {
     width:9,
-    height:13
+    height:13,
+    marginTop:17,
     
 },
 
@@ -63,13 +65,10 @@ const styles = {
     alignItems: 'center',
     //justifyContent: 'center',
      fontFamily: "PTS75F",
-     color:'#fff'
+     color:'#fff',
+     marginTop:5,
 
   }
 };
-
-
-
-
 
 export default CustomHeader;

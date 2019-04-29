@@ -19,7 +19,10 @@ import Feedback from './Feedback';
 import TrainigJobStatus from './TrainigJobStatus';
 import Scolarship from './Scolarship';
 import Profile from './Profile';
+import AboutUs from './AboutUs';
+import ITPartner from './ITPartner';
 import TraningList from './TraningList';
+import TraningCentresSubList from './TraningCentresSubList';
 
 class RouterComponent extends Component {
   constructor() {
@@ -28,8 +31,6 @@ class RouterComponent extends Component {
       this.state = {
 
          isLogin: false,
-
-
       };
   }
   componentWillMount() {
@@ -104,6 +105,9 @@ class RouterComponent extends Component {
         <Scene key='TrainigJobStatus' component={TrainigJobStatus} title='' />
         <Scene key='Scolarship' component={Scolarship} title='' />
         <Scene key='TraningList' component={TraningList} title='' />
+        <Scene key='AboutUs' component={AboutUs} title='' />
+        <Scene key='TraningCentresSubList' component={TraningCentresSubList} title='' />
+        <Scene key='ITPartner' component={ITPartner} title='' />
       </Scene>
      </Scene>
      </Router>

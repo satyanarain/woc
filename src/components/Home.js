@@ -40,33 +40,43 @@ constructor(props) {
     clickToSuggestedCenterViewMore = () => {
       Actions.SuggestedCentres();
     }
-    clickToTraningViewMore = () => {
-      Actions.TraningList();
+    clickToTraningViewMore = (strId) => {
+      Actions.TraningCentresSubList({id:strId});
     }
 
 clickToFeedBack=()=>
 {
-    
- Actions.Feedback();   
-    
+
+ Actions.Feedback();
+
 }
 clickToScolarship=()=>
 {
-    
- Actions.Scolarship();   
-    
+
+ Actions.Scolarship();
+
 }
 clickToJob=()=>
 {
-    
- Actions.TrainigJobStatus();   
-    
+
+ Actions.TrainigJobStatus();
+
+}
+clickToAboutUs=()=>
+{
+
+ Actions.AboutUs();
+
 }
 
 
 clickToProfile=()=>
 {
-  Actions.Profile();   
+  Actions.Profile();
+}
+clickToITPartner=()=>
+{
+  Actions.ITPartner();
 }
 
 
@@ -96,7 +106,7 @@ this.setState({loaded: false});
 
     /*
      @handleKeyDown: this function use to close the keyboard on return click.
-    
+
      */
     handleKeyDown = (e) => {
         if (e.nativeEvent.key == "Enter") {
@@ -106,24 +116,24 @@ this.setState({loaded: false});
 
  renderViewAll() {
         return this.state.arrSuggeationCenter.map((array, index) =>
-                                    <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore} style={styles.suggestedImg}>
-                                   
+                                    <TouchableOpacity onPress={this.clickToTraningViewMore.bind(this,array.id)} style={styles.suggestedImg}>
+
                                      <Image source={{uri: array.logo}}  style={styles.imgRadius}/>
-                                      
+
                                        {/* <Text style={styles.textColorBlack}>array.title</Text> */}
                                   </TouchableOpacity>
              );
         }
-        
+
  renderView() {
         return this.state.arrSuggeationCenter.map((array, index) =>
                                  <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore} style={styles.suggestedImg}>
-                                   
+
                                        <Image source={{uri: array.logo}}  style={styles.imgRadius}/>
                                        {/* <Text style={styles.textColorBlack}>{array.title}</Text> */}
-                                 
+
                                     </TouchableOpacity>
-                                   
+
             );
         }
 
@@ -135,8 +145,8 @@ this.setState({loaded: false});
             Login,
             loaded
         } = this.state;
-        
-     
+
+
 
 const placeholder = {
             label: 'Select a sport...',
@@ -172,21 +182,18 @@ return (
                                        <Text style={styles.textColorBold}>{this.props.lang.MENU_SUGGESSTION}</Text>
                                    </View>
                                    <View style={styles.rowRight}>
-                                       <TouchableOpacity onPress={this.clickToSuggestedCenterViewMore}
-                                                         >
-                                           <Text style={styles.textColorLink}></Text>
-                                       </TouchableOpacity>
+
 
                                    </View>
                                </View>
                              {
                                                                     (loaded === true) ? <View style={styles.containerActivety}><View style={styles.loader}><ActivityIndicator style={styles.loaderSub} size="large"  /></View></View> : null
                                             }
-                               
+
                                <View style={styles.spaceBetween}>
                                    {this.renderView()}
                                   </View>
-                            
+
                                 { /**********************************Suggested Centres end*********************************/}
                                 { /*******************************************Training Centres start************************/}
                                <View style={styles.mainRowSub}>
@@ -296,7 +303,7 @@ const styles = StyleSheet.create({
     marginTop:5,
     width:'100%'
   },
-  
+
      containerActivety: {
 
         backgroundColor: 'transparent',
@@ -308,14 +315,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     loader:{
-  width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10 
+  width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10
 },
-   
+
 loaderSub:{
   color:"#1A44F2"
-}, 
-  
-  
+},
+
+
   buttonFeedBack: {
     backgroundColor: '#0095d3',
     paddingBottom: 10,
@@ -431,9 +438,9 @@ loaderSub:{
    width:'35%',
 },
  suggestedImgRight: {
-  
+
     width:'65%',
- 
+
  },
  scholarshipRight: {
     width:'65%',
@@ -496,7 +503,7 @@ loaderSub:{
        fontFamily: "Helvetica",
        fontSize:14,
    },
-   
+
      rowLeft: {
        width:'70%',
        fontFamily: "Helvetica",

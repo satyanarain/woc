@@ -46,7 +46,7 @@ class SuggestedCentreDetails extends React.Component {
  call = () => {
     //handler to make a call
     const args = {
-      number: this.state.arrSuggeationCenterDetails.contact_number,
+      number: 989897897,
       prompt: false,
     };
     call(args).catch(console.error);
@@ -192,17 +192,18 @@ return (
                        {/***************************row*****************/}
                         <View style={styles.mainRowwtBorder}>
                            
-                                 <TouchableOpacity
-                                           style={styles.button}
-                                          onPress={this.call}
-                                           >
-                                           <Text style={styles.textColor}>Call</Text>
-                                       </TouchableOpacity>
+                              
                                  <TouchableOpacity
                                            style={styles.button}
                                           onPress={this.handleEmail}
                                            >
-                                           <Text style={styles.textColor}>Email</Text>
+                                           <Text style={styles.textColor}>EMAIL</Text>
+                                       </TouchableOpacity>
+                                         <TouchableOpacity
+                                           style={styles.button1}
+                                          onPress={this.call}
+                                           >
+                                           <Text style={styles.textColor}>CALL</Text>
                                        </TouchableOpacity>
                            
                             </View>
@@ -245,14 +246,25 @@ const styles = StyleSheet.create({
    },
  button: {
     backgroundColor: '#e48478',
-    
-    borderRadius:5,
+  
     color:'#fff',
     fontFamily: "PTS75F",
     marginTop:5,
-    marginLeft:50,
-    width:'21%'
+   paddingLeft:10,
+    paddingRight:10,
+  
   },
+ button1: {
+   backgroundColor: '#e48478',
+  
+    color:'#fff',
+    fontFamily: "PTS75F",
+    marginTop:5,
+    marginLeft:'4%',
+     paddingLeft:15,
+    paddingRight:15,
+ },
+  
  mainRow: {
       width:'100%',
       flexDirection:'row',
@@ -271,6 +283,7 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       paddingTop:0,
       padding:20,
+      paddingLeft:20,
      },
  rowleft: {
       width:'18%',
@@ -295,7 +308,8 @@ const styles = StyleSheet.create({
         fontFamily: "PTS55F",
         color:"#fff",
         padding:5,
-      textAlign:'center'
+      textAlign:'center',
+      fontSize:13,
    },
     contentHeading: {
        fontFamily: "PTS55F",

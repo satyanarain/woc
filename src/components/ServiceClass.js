@@ -38,14 +38,14 @@ export default class ServiceClass extends React.Component {
         });
     }
 
-    static letSuggestedCenter = (langCode,lastUrl) => {
+  static letSuggestedCenter = (langCode,lastUrl,id) => {
 
-          return axios.post(baseUrl + lastUrl, {
-              category: '2',
-              page: '1',
-              language: langCode
-          });
-      }
+         return axios.post(baseUrl + lastUrl, {
+             category: id,
+             page: '1',
+             language: langCode
+         });
+     }
     static letSuggestedCenterDetails = (center_id,lastUrl) => {
 
           return axios.post(baseUrl + lastUrl, {
@@ -95,6 +95,35 @@ export default class ServiceClass extends React.Component {
               age:age
           });
       }
+    static updateProfile = (id,first_name,last_name,email,phone_number,city,state,pincode,qualification,age,gender,work_experience,patient_name,patient_contact_number,patient_address,patient_relationship,patient_detail,language,lastUrl) => {
+        //debugger;
+          return axios.post(baseUrl + lastUrl, {
+              id: id,
+              first_name: first_name,
+              last_name: last_name,
+              email:email,
+              phone_number:phone_number,
+              city:city,
+              state:state,
+              pincode:pincode,
+              qualification:qualification,
+              age:age,
+               gender:gender,
+               work_experience:work_experience,
+               patient_name:patient_name,
+               patient_contact_number:patient_contact_number,
+               patient_address:patient_address,
+               patient_relationship:patient_relationship,
+               patient_detail:patient_detail,
+               language:language,
+               
+          });
+      }
+      
+      
+      
+      
+      
     static saveFeedbackForm = (SelectedFeedbackType,txtMessage,user_id,language,lastUrl) => {
 
           return axios.post(baseUrl + lastUrl, {
@@ -128,6 +157,17 @@ export default class ServiceClass extends React.Component {
               
           });
       }
+      
+ static searchState = (langCode,lastUrl,keyword,state) => {
+
+          return axios.post(baseUrl + lastUrl, {
+              category: 1,
+              page: 1,
+              language: langCode,
+              state:state
+          });
+      }
+
     static saveTrainingJobStatusForm = (training_center,cource_engaged,scholarship_status,training_started,training_completed,job_started_on,job_title,job_income,user_id,language,lastUrl) => {
 //debugger;
           return axios.post(baseUrl + lastUrl, {
@@ -216,6 +256,8 @@ static EditProject = (lastUrl,token,name,description,latitude,longitude,parents)
 }
 
 static genericGetMethod = (lastUrl) => {
+
+
 
          return axios.get(baseUrl + lastUrl, {
 

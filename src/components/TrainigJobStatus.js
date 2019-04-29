@@ -74,9 +74,9 @@ clickToLogout=()=>
     /***********************************************************/
 
 /*
-@handleKeyDown: this function use to close the keyboard on return click.
+@componentWillMount: find user details.
 */
-   componentWillMount() {
+componentWillMount() {
       this.props.fetchLang();
       this.props.getLanguage();
     // alert(this.props.getLoginData());
@@ -96,9 +96,7 @@ this.setState({user_id:value.id});
        }
 
       })
-
-
-  } 
+ } 
   
                   handleKeyDown = (e) => {
                   if (e.nativeEvent.key == "Enter"){
@@ -304,7 +302,7 @@ this.setState({user_id:value.id});
                      </View>
                               { /********************************************/}
                                                   
-                                                <View style={styles.mainRowNoBorder}>
+                                                <View style={styles.mainRow}>
                                                 <View style={styles.rowHundredPercent}>
         { /********************Select box************************/}
                                               <RNPickerSelect
@@ -349,7 +347,7 @@ this.setState({user_id:value.id});
   
   
 {                                                 (taken==='Taken') ?
-                                                 <View style={{borderColor:'#fff',borderTopWidth:1,marginTop:-10,paddingTop:10}} >
+                                                 <View style={{borderColor:'#fff',marginTop:-10,paddingTop:10}} >
                                                      <View style={styles.mainRow1}>
                                                    <View style={styles.subrow}>
                                                    
@@ -417,13 +415,14 @@ this.setState({user_id:value.id});
                                                     </View>
                                                     </View>
                                                     
-                                                    <View style={styles.mainRowNoBorder}>
+                                                    <View style={styles.mainRow}>
                                                    <View style={styles.subrow}>
                                                         <TextInput
                                                             style={styles.textInput}
                                                             placeholder={this.props.lang.TRAINING_SALARY}
                                                             placeholderTextColor="#fff"
                                                             underlineColorAndroid="transparent"
+                                                            keyboardType='numeric'
                                                             value={this.state.job_income}
                                                             onChangeText={job_income => this.setState({job_income})}
                                                             />
@@ -525,6 +524,12 @@ safearea:
     mainRow: {
         flexDirection:'row',width:'100%', 
         borderRadius: 5,borderColor:'#fff',borderBottomWidth:1,
+        marginBottom:15,
+       
+    },
+    mainRowwtBorder: {
+        flexDirection:'row',width:'100%', 
+        borderRadius: 5,
         marginBottom:15,
        
     },

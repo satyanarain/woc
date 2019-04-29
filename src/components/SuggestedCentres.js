@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import FastImage from 'react-native-fast-image'
 
 class SuggestedCentres extends React.Component {
-   
+
 
     constructor(props) {
         super(props);
@@ -39,17 +39,32 @@ clickToSuggestedCenterDetails=(item)=>
 {
   //alert(item)
   Actions.SuggestedCentreDetails({itemId:item})  ;
-    
+
 }
 
 
 componentWillMount(){
-
+//alert(this.props.profileData.userloginData.state)
+     //this.setState({ prifilestate:this.props.profileData.userloginData.state});
+      
+      if(this.props.profileData.userloginData.state!='')
+      {
+          
+          this.searchStateOne(this.props.profileData.userloginData.state);
+          
+          
+      }
+      
+      
+      
+      
+      
   this.setState({loaded: true})
 
-  ServiceClass.letSuggestedCenter(this.props.selectedLangCode,'get-training-center-list').then((reData) => {
+    ServiceClass.letSuggestedCenter(this.props.selectedLangCode,'get-training-center-list',"2").then((reData) => {
 
-
+//debugger;
+  console.log(reData.data.response);
     console.log(reData.data.response.body);
     this.setState({arrSuggeationCenter:reData.data.response.body});
     this.setState({searchData:reData.data.response.body});
@@ -65,7 +80,7 @@ this.setState({loaded: false});
 
 }
 
-    /***********************************************************/
+/***********************************************************/
     componentDidMount() {
       this.setState({loaded: true})
 
@@ -94,8 +109,8 @@ this.setState({loaded: false});
                    */
 
 searchSubmit = () =>{
-      console.log("am call");
-
+     // console.log("am call");
+//alert(str)
           this.setState({loaded: true})
 
           ServiceClass.searchCenter(this.props.selectedLangCode,'get-training-center-list',this.state.searchQuery,this.state.selectedState).then((reData) => {
@@ -113,9 +128,7 @@ searchSubmit = () =>{
         });
 }
 
-
-
-    searchChange(str){
+searchChange(str){
         console.log(str);
         if (str == ''){
           Keyboard.dismiss();
@@ -126,7 +139,30 @@ searchSubmit = () =>{
 
 
     }
+    
+ searchStateOne = (str) =>{
 
+    if(str != null)
+    {
+         // alert("am call");
+
+              this.setState({loaded: true})
+ //debugger
+              ServiceClass.searchState(this.props.selectedLangCode,'get-training-center-list',this.state.searchQuery,str).then((reData) => {
+ //debugger
+                 
+                console.log(reData.data.response.body);
+                this.setState({arrSuggeationCenter:reData.data.response.body});
+
+                  this.setState({loaded: false});
+
+            }).catch((error) => {
+
+              this.setState({loaded: false});
+              Alert.alert(error);
+            });
+    }
+    }
 
     render() {
 
@@ -189,8 +225,9 @@ searchSubmit = () =>{
                         this.setState({
                             selectedState: value,
                         });
+                        this.searchStateOne(value);
                     }}
-
+                   
                   style={{ ...pickerSelectStyles,
                                                     iconContainer: {
                                                         top: 7,
@@ -214,7 +251,7 @@ searchSubmit = () =>{
                                 <KeyboardAwareScrollView>
                                 <View style={{width:'100%'}}>
                                <SectionGrid
-                                itemDimension={150} 
+                                itemDimension={150}
                                 sections={[
                                   {
                                     title: 'Title1',
@@ -222,10 +259,10 @@ searchSubmit = () =>{
                                   }
                                 ]}
                                 style={styles.gridView}
-                                renderItem={({ item, section, index }) => ( 
+                                renderItem={({ item, section, index }) => (
                                      <TouchableOpacity
                                             onPress={this.clickToSuggestedCenterDetails.bind(this,item.id)}
-              
+
                                           >
                                   <View style={[styles.itemContainer, { backgroundColor: '#fff'}]}>
                                   <View >
@@ -238,7 +275,7 @@ searchSubmit = () =>{
                                           headers:{ Authorization: 'someAuthToken' },
                                           priority: FastImage.priority.normal,
                                         }}
-                                       
+
                                       />
                                     </View>
                                           <View style={{borderBottomWidth:1,borderColor:'black',marginBottom:5}}>
@@ -279,7 +316,7 @@ searchSubmit = () =>{
                                     </View>
                                   </View>
                                    </TouchableOpacity>
-                                  
+
                                 )}
 
                               />
@@ -369,7 +406,7 @@ const styles = StyleSheet.create({
       width:'100%',
       backgroundColor:'#ccc',
       flexDirection:'row',
-     
+
        // backgroundColor:'transparent',
        // opacity: 0.6
        borderBottomWidth:1,
@@ -459,11 +496,27 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps({ lang, selectedLangCode }){
-//  debugger;
-    let data =  lang.body[selectedLangCode]
-return { lang: data , selectedLangCode:selectedLangCode };
+
+function mapStateToProps({ lang, selectedLangCode , auth }){
+    
+////debugger;
+let data =  lang.body[selectedLangCode]
+console.log(auth);
+  return {
+    lang:data,
+    profileData:auth,
+    selectedLangCode:selectedLangCode
+  };
 }
+ export default connect(mapStateToProps,actions)  (SuggestedCentres);
 
 
- export default connect(mapStateToProps,actions) (SuggestedCentres);
+
+//function mapStateToProps({ lang, selectedLangCode }){
+////  //debugger;
+//    let data =  lang.body[selectedLangCode]
+//return { lang: data , selectedLangCode:selectedLangCode };
+//}
+//
+//
+// export default connect(mapStateToProps,actions) (SuggestedCentres);
